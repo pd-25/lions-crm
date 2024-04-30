@@ -1,5 +1,5 @@
 @extends('admin.layout.main')
-@section('title', 'Members | ')
+@section('title', 'Operations Schemes | ')
 @section('content')
     <section class="section dashboard">
         <div class="row">
@@ -8,42 +8,35 @@
                 <div class="card">
                     <div class="card-body">
 
-                        <h5 class="card-title">All Members</h5>
+                        <h5 class="card-title">All Operation Schemes</h5>
                         @if (Session::has('msg'))
                             <p class="alert alert-info">{{ Session::get('msg') }}</p>
                         @endif
-                        <a class="btn btn-sm btn-outline-success float-end" href="{{ route('members.create') }}">Add
-                            Member</a>
-                        {{-- </div> --}}
+                        <a class="btn btn-sm btn-outline-success float-end" href="{{ route('operation-schemes.create') }}">New
+                            Scheme</a>
                         <table class="table">
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Image</th>
-                                    <th scope="col">Phone</th>
-                                    <th scope="col">Email</th>
-                                    <th scope="col">Member From</th>
-                                    <th scope="col">Action</th>
+                                    <th scope="col">Scheme Name</th>
+                                    <th scope="col">Price</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @php
-                                    $startIndex = ($members->currentPage() - 1) * $members->perPage() + 1;
+                                    $startIndex = ($operationschemes->currentPage() - 1) * $operationschemes->perPage() + 1;
                                 @endphp
-                                @foreach ($members as $member)
+                                @foreach ($operationschemes as $operationscheme)
                                     <tr>
                                         <th scope="row">{{ $startIndex++ }}</th>
-                                        <td>{{ $member->name }}</td>
-                                        <td> <img src="{{ getImage($member->image, 'MemberImage') }}" alt=""
-                                                height="50px" width="50px"></td>
-                                        <td>{{ $member->phone }}</td>
-                                        <td>{{ $member->email }}</td>
-                                        <td> {{ \Carbon\Carbon::parse($member->join_date)->isoFormat('Do MMMM YYYY') }}</td>
+                                        <td>{{ $operationscheme->name }}</td>
+
+                                        <td>{{ $operationscheme->price }}</td>
                                         <td>
-                                            <a href="{{ route('members.edit', $member->slug) }}"><i
+                                            <a href="{{ route('operation-schemes.edit', $operationscheme->slug) }}"><i
                                                     class="ri-pencil-fill"></i></a>
-                                            <form method="POST" action="{{ route('members.destroy', $member->slug) }}"
+                                            <form method="POST"
+                                                action="{{ route('operation-schemes.destroy', $operationscheme->slug) }}"
                                                 class="d-inline-block pl-2">
                                                 @csrf
                                                 @method('DELETE')
@@ -61,7 +54,7 @@
                             </tbody>
 
                         </table>
-                        {{ $members->links() }}
+                        {{ $operationschemes->links() }}
                         <!-- End Default Table Example -->
                     </div>
                 </div>

@@ -14,6 +14,12 @@
                 <span>Members</span>
             </a>
         </li>
+        <li class="nav-item {{ Route::is('operation-schemes.index') ? 'active' : ''}}">
+            <a class="nav-link " href="{{route('operation-schemes.index')}}">
+                <i class="ri-book-3-fill"></i>
+                <span>Operation Schemes</span>
+            </a>
+        </li>
 
         <li class="nav-item ">
             <a class="nav-link " href="#">
@@ -22,12 +28,7 @@
             </a>
         </li>
 
-        <li class="nav-item ">
-            <a class="nav-link " href="#">
-                <i class="ri-group-fill"></i>
-                <span>Operation Schemes</span>
-            </a>
-        </li>
+        
 
         <li class="nav-item ">
             <a class="nav-link " href="#">
