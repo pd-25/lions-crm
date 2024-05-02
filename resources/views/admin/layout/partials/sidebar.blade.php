@@ -22,7 +22,7 @@
         </li>
 
         <li class="nav-item ">
-            <a class="nav-link " href="#">
+            <a class="nav-link {{ Route::is('register-bookings.index') ? 'active' : ''}}" href="{{route('register-bookings.index')}}">
                 <i class="ri-group-fill"></i>
                 <span>Booking List</span>
             </a>

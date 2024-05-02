@@ -16,7 +16,9 @@ class DatabaseSeeder extends Seeder
         $this->call([
             // AdminSeeder::class,
             // MemberSeeder::class
-            OperationSchemeSeeder::class
+            // OperationSchemeSeeder::class
+            // UserSeeder::class,   
+            RegisterBookingSeeder::class
         ]);
         
     }
