@@ -11,7 +11,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::group(['middleware' => 'receptionist'], function () {
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 });
 
 require __DIR__ . '/admin.php';
