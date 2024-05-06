@@ -43,8 +43,10 @@
 
                 <div class="card d-none" id="patient-registration-form">
                     <div class="card-body">
-                        <h5 class="card-title">Patient Details</h5>
-                        <span id="span-text"></span>
+                        <div class="d-flex">
+                            <h5 class="card-title">Patient Details</h5>
+                            <span id="span-text"></span>
+                        </div>
                         <form action="{{ route('register-bookings.store') }}" method="POST">
                             @method('POST')
                             @csrf
@@ -74,7 +76,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-8">
+                                <div class="col-md-12">
                                     <label for="inputText" class="col-form-label">Adderss</label>
                                     <div>
                                         <input type="text" name="address" class="form-control" id="address" required>
@@ -86,10 +88,28 @@
                                     </div>
                                 </div>
 
+                                <div class="col-md-8">
+                                    <label for="inputText" class="col-form-label">Booking Type</label>
+                                    <div>
+                                        <select name="bookingtype" class="form-control">
+                                            <option value="">--select booking type--</option>
+                                            @foreach ($bookingTypes as $item)
+                                                {{-- $item->price --}}
+                                                <option value="{{ $item->id }}">{{ $item->type_name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('amount')
+                                            <span class="text-danger" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
                                 <div class="col-md-4">
                                     <label for="inputText" class="col-form-label">Amount</label>
                                     <div>
-                                        <input type="number" value="100" name="amount" class="form-control" required>
+                                        <input type="number" value="" name="amount" class="form-control" required>
                                         @error('amount')
                                             <span class="text-danger" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -131,8 +151,6 @@
 @section('script')
     <script>
         function checkIfExist() {
-
-
             const givenInput = document.getElementById('number-or-id').value.trim();
             if (givenInput) {
                 document.getElementById('spinner-div').classList.remove('d-none');
@@ -150,23 +168,37 @@
                             document.getElementById('patient-name').value = data[0].patient_name;
                             document.getElementById('phone-number').value = data[0].phone_number;
                             document.getElementById('address').value = data[0].address;
-                            document.getElementById('span-text').innerHTML = 'The patient is already exist';
+                            document.getElementById('span-text').innerHTML =
+                                '<p class="span-text-p-color">(The patient is already exist)</p>';
                         } else {
                             document.getElementById('patient-name').value = '';
                             document.getElementById('phone-number').value = ''
                             document.getElementById('address').value = '';
-                            document.getElementById('span-text').innerHTML = 'This is a new patient';
+                            document.getElementById('span-text').innerHTML =
+                                '<p class="span-text-p-color">(This is a new patient)</p>';
                         }
                         document.getElementById('spinner-div').classList.add('d-none');
                         document.getElementById('patient-registration-form').classList.remove('d-none');
                     })
                     .catch(error => {
                         document.getElementById('spinner-div').classList.add('d-none');
-                        document.getElementById('top-span-text').innerHTML = 'Some Error Occur, Try again or Reload the Page..';
+                        document.getElementById('top-span-text').innerHTML =
+                            'Some Error Occur, Try again or Reload the Page..';
                     });
             } else {
                 swal("Please put the correct input first.");
             }
         }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelector('select[name="bookingtype"]').addEventListener('change', function() {
+                var selectedOption = this.value;
+                var bookingTypes = <?php echo json_encode($bookingTypes); ?>;
+                var selectedBookingType = bookingTypes.find(function(item) {
+                    return item.id == selectedOption;
+                });
+                document.querySelector('input[name="amount"]').value = selectedBookingType.price;
+            });
+        });
     </script>
 @endsection

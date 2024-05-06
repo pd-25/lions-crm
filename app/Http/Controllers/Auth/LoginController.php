@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-
+use Illuminate\Http\Request;
 class LoginController extends Controller
 {
     /*
@@ -25,7 +25,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/dashboard';
 
     /**
      * Create a new controller instance.
@@ -36,4 +36,22 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    /**
+ * Attempt to log the user into the application.
+ *
+ * @param  \Illuminate\Http\Request  $request
+ * @return bool
+ */
+protected function attemptLogin(Request $request)
+{
+    // Check if the user's role is 1
+    $credentials = $this->credentials($request);
+    $credentials['role'] = 1; // Assuming 'role' is the column name for the user's role
+
+    return $this->guard()->attempt(
+        $credentials,
+        $request->boolean('remember')
+    );
+}
 }

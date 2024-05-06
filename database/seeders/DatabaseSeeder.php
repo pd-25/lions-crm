@@ -17,8 +17,9 @@ class DatabaseSeeder extends Seeder
             // AdminSeeder::class,
             // MemberSeeder::class
             // OperationSchemeSeeder::class
-            // UserSeeder::class,   
-            RegisterBookingSeeder::class
+            UserSeeder::class,   
+            // RegisterBookingSeeder::class
+            // BookingTypeSeeder::class
         ]);
         
     }

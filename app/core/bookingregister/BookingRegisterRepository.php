@@ -3,6 +3,7 @@
 namespace App\core\bookingregister;
 
 use App\core\bookingregister\BookingRegisterInterface;
+use App\Models\BookingType;
 use App\Models\RegisterBooking;
 use App\Models\User;
 use illuminate\Support\Str;
@@ -11,10 +12,13 @@ class BookingRegisterRepository implements BookingRegisterInterface
 {
     private $bookingRegisterModel;
     private $userModel;
+    private $bookingTypeModel;
     public function __construct()
     {
         $this->bookingRegisterModel = RegisterBooking::query();
         $this->userModel = User::query();
+        $this->bookingTypeModel = BookingType::query();
+        
     }
     public function checkIfPatientExist($givenInput)
     {
@@ -49,5 +53,9 @@ class BookingRegisterRepository implements BookingRegisterInterface
 
     public function getAllBookings() {
         return $this->bookingRegisterModel->with('patient')->orderByDesc('id');
+    }
+
+    public function getAllBookingTypes() {
+        return $this->bookingTypeModel->orderByDesc('id')->get();
     }
 }

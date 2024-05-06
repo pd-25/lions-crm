@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\admin\auth\AuthController;
+use App\Http\Controllers\admin\bookingtypes\BookingTypesController;
 use App\Http\Controllers\admin\dashboard\DashboardController;
 use App\Http\Controllers\admin\member\MemberController;
 use App\Http\Controllers\admin\operationschemes\OperationSchemesController;
@@ -16,6 +17,7 @@ Route::group(['prefix' => 'admin', 'middleware'=>'admin'], function () {
     Route::resource('/members', MemberController::class);
     Route::resource('/operation-schemes', OperationSchemesController::class);
     Route::resource('/register-bookings', RegisterBookingController::class);
+    Route::resource('/booking-types', BookingTypesController::class);
     Route::get('/check-patient-privious-bookings', [RegisterBookingController::class, 'checkPatientPriviousBooking'])->name('admin.checkPatientPriviousBooking');
 
 

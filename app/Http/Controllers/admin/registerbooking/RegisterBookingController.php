@@ -21,7 +21,9 @@ class RegisterBookingController extends Controller
 
     public function create()
     {
-        return view('admin.registerbooking.create');
+        return view('admin.registerbooking.create', [
+            'bookingTypes' => $this->bookingRegisterInterface->getAllBookingTypes()
+        ]);
     }
 
     public function store(Request $request)

@@ -1276,6 +1276,12 @@ h6 {
 }
 
 .patient-problem {
-  height: 103px;  
+    height: 103px;
+}
+#span-text {
+    margin-top: 18px !important;
 }
 
+.span-text-p-color {
+    color: #0d6efd;
+}

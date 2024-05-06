@@ -26,5 +26,16 @@ class UserSeeder extends Seeder
             $data->password = Hash::make('12345678');
             $data->save();
         }
+
+        //Receptionist user
+        User::create([
+            'name' => 'Lion Receptionist',
+            'slug' => 'lion-receptionist',
+            'email' => 'recep@mail.com',
+            'phone_number' => 9382930382,
+            'address' => 'Nawadip, lions point',
+            'password' => Hash::make('12345678'),
+            'role' => 1
+        ]);
     }
 }
