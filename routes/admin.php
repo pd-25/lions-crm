@@ -19,6 +19,7 @@ Route::group(['prefix' => 'admin', 'middleware'=>'admin'], function () {
     Route::resource('/register-bookings', RegisterBookingController::class);
     Route::resource('/booking-types', BookingTypesController::class);
     Route::get('/check-patient-privious-bookings', [RegisterBookingController::class, 'checkPatientPriviousBooking'])->name('admin.checkPatientPriviousBooking');
+    Route::get('/check-bookingtype-operation', [RegisterBookingController::class, 'checkIfBookingTypeOperation'])->name('admin.checkIfBookingTypeOperation');
 
 
     Route::get('log-out', [AuthController::class, 'adminLogout'])->name('admin.logout');
