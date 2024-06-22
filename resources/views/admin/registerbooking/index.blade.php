@@ -18,9 +18,11 @@
                             <thead>
                                 <tr>
                                     <th scope="col">Booking ID</th>
+                                    <th scope="col">Booking Type</th>
                                     <th scope="col">Patient Name</th>
                                     <th scope="col">Phone Number</th>
                                     <th scope="col">Amount</th>
+                                    <th scope="col">Date</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
@@ -29,24 +31,15 @@
                                 @foreach ($allbookings as $allbooking)
                                     <tr>
                                         <th scope="row">{{ '#'.$allbooking->booking_id }}</th>
+                                        <td>{!! $allbooking->booking_type_or_operation !!}</td>
                                         <td>{{ $allbooking->patient->name }}</td>
                                         <td>{{ $allbooking->patient->phone_number }}</td>
                                         <td>{{ $allbooking->amount }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($allbooking->created_at)->format('dM, Y h:i A') }}</td>
                                         <td>
-                                            <a href="{{ route('register-bookings.edit', $allbooking->slug) }}"><i
-                                                    class="ri-pencil-fill"></i></a>
-                                            <form method="POST"
-                                                action="{{ route('register-bookings.destroy', $allbooking->slug) }}"
-                                                class="d-inline-block pl-2">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="delete-icon show_confirm"
-                                                    data-toggle="tooltip" title='Delete'>
-
-                                                    <i class="ri-delete-bin-2-fill"></i>
-
-                                                </button>
-                                            </form>
+                                            <a href="{{ route('register-bookings.show', $allbooking->slug) }}"><i
+                                                    class="ri-eye-fill"></i></a>
+                                            
                                         </td>
                                     </tr>
                                 @endforeach

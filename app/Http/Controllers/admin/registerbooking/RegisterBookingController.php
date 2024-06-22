@@ -49,16 +49,24 @@ class RegisterBookingController extends Controller
                     'operation_scheme_id.required' => 'Operation scheme ID is required when booking type is operation.',
                 ],
             );
-            $data = $request->only('patient_name','phone_number','address','booking_type_id','amount','about_patient_problem','operation_scheme_id');
-            dd($data);
+            $userData = $request->only('patient_name', 'phone_number', 'address');
+            $bookingData = $request->only('booking_type_id', 'amount', 'about_patient_problem', 'operation_scheme_id');
+            if ($this->bookingRegisterInterface->createBookingRegister($userData, $bookingData)) {
+                return response()->json([
+                    "status" => "success",
+                    "msg" => "Booking created successfully!"
+                ]);
+            }
         } catch (ValidationException $e) {
             return response()->json(['status' => 'error', 'errors' => $e->errors()], 422);
         }
     }
 
-    public function show(string $id)
+    public function show(string $slug)
     {
-        //
+        return view('admin.registerbooking.show', [
+            'registerBooking' => $this->bookingRegisterInterface->getBookingRegister($slug)
+        ]);
     }
 
     public function edit(string $id)

@@ -1,1 +1,3 @@
-create recep dashboard blade 
+Created Expenditure Route, Now to to
+1. List(Amount, Debit/Credit, Note, Date)
+2. Create(Amount, Debit/Credit, Note)

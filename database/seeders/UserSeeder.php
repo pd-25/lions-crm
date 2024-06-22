@@ -16,10 +16,10 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         $faker = Factory::create();
-        for ($i = 1; $i <= 40; $i++) {
+        for ($i = 1; $i <= 4; $i++) {
             $data = new User();
             $data->name = $faker->name();
-            $data->slug = $faker->unique()->slug(3);
+            // $data->slug = $faker->unique()->slug(3);
             $data->email = $faker->email;
             $data->phone_number = $faker->phoneNumber;
             $data->address = $faker->address;

@@ -298,8 +298,9 @@
                     return response.json();
                 })
                 .then(data => {
+                    console.log(data);
                     if (data.status === 'success') {
-                        swal("Booking created successfully!", "", "success")
+                        swal(data.msg, "", "success")
                             .then(() => {
                                 window.location.href = "{{ route('register-bookings.index') }}";
                             });

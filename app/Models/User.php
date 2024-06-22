@@ -6,7 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-
+use Illuminate\Support\Str;
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
@@ -21,7 +21,8 @@ class User extends Authenticatable
         'email',
         'password',
         'phone_number',
-        'address'
+        'address',
+        'slug'
     ];
 
     /**
@@ -46,9 +47,43 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    /**
+     * Boot the model.
+     */
+    /**
+     * Boot the model.
+     */
+    protected static function boot()
+    {
+        parent::boot();
 
+        static::creating(function ($user) {
+            $user->slug = static::generateUniqueSlug($user->name);
+        });
+    }
 
-    public function registerBooking() {
+    /**
+     * Generate a unique slug for the user.
+     *
+     * @param  string  $name
+     * @return string
+     */
+    protected static function generateUniqueSlug($name)
+    {
+        $slug = Str::slug($name);
+        $originalSlug = $slug;
+        $counter = 1;
+
+        while (User::where('slug', $slug)->exists()) {
+            $slug = $originalSlug . '-' . $counter;
+            $counter++;
+        }
+
+        return $slug;
+    }
+
+    public function registerBooking()
+    {
         return $this->hasMany(RegisterBooking::class, 'user_id', 'id');
     }
 }
