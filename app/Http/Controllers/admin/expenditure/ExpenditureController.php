@@ -2,17 +2,25 @@
 
 namespace App\Http\Controllers\admin\expenditure;
 
+use App\core\expenditure\ExpenditureInterface;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class ExpenditureController extends Controller
 {
+    public $expenditureInterface;
+    public function __construct(ExpenditureInterface $expenditureInterface)
+    {
+        $this->expenditureInterface = $expenditureInterface;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return view('admin.expenditure.index', [
+            'expenditures' => $this->expenditureInterface->getAllExpenditures()->paginate(20)
+        ]);
     }
 
     /**
@@ -20,7 +28,7 @@ class ExpenditureController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.expenditure.create');
     }
 
     /**
