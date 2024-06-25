@@ -9,14 +9,14 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Add New Expenditure</h5>
-                        <form action="{{ route('members.store') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('expenditure-manages.store') }}" method="POST" enctype="multipart/form-data">
                             @method('POST')
                             @csrf
 
                             <div class="row mb-3">
                                 <label for="inputText" class="col-sm-2 col-form-label">Ammount</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="ammount" class="form-control" required>
+                                    <input type="text" name="ammount" class="form-control" >
                                     @error('ammount')
                                         <span class="text-danger" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -43,7 +43,7 @@
                             <div class="row mb-3">
                                 <label for="inputNumber" class="col-sm-2 col-form-label">Note</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="note" class="form-control" required>
+                                    <input type="text" name="note" class="form-control" >
                                     @error('note')
                                         <span class="text-danger" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -57,7 +57,7 @@
                             <div class="row mb-3">
                                 <div class="col-sm-12">
                                     <button type="submit" class="btn btn-sm btn-primary float-end m-2">Submit Form</button>
-                                    <a href="{{ route('members.index') }}" type="submit"
+                                    <a href="{{ route('expenditure-manages.index') }}" type="submit"
                                         class="btn btn-sm btn-danger float-end m-2">Cancel</a>
                                 </div>
                             </div>

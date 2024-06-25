@@ -14,5 +14,18 @@ class ExpenditureRepository implements ExpenditureInterface
         return Expenditure::query()->orderByDesc('id');
     }
 
-   
+    public function storeExpenditure(array $data)
+    {
+        $store = Expenditure::create($data);
+        if ($store instanceof Expenditure) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function getExpenditure(int $id)
+    {
+        return Expenditure::firstOrFail($id);
+    }
 }

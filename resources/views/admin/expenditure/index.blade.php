@@ -35,15 +35,17 @@
                                         <th scope="row">{{ $startIndex++ }}</th>
                                         <td>{{ $expenditure->ammount }}</td>
 
-                                        <td>{{ $expenditure->debit_or_credit }}</td>
+                                        <td><span
+                                                class="{{ getExpenditureType($expenditure->debit_or_credit) }}">{{ $expenditure->debit_or_credit }}</span>
+                                        </td>
                                         <td>{{ $expenditure->note }}</td>
                                         <td> {{ \Carbon\Carbon::parse($expenditure->join_date)->format('dM, Y h:i A') }}
                                         </td>
                                         <td>
-                                            <a href="{{ route('expenditure-manages.edit', $expenditure->slug) }}"><i
+                                            <a href="{{ route('expenditure-manages.edit', encrypt($expenditure->id)) }}"><i
                                                     class="ri-pencil-fill"></i></a>
                                             <form method="POST"
-                                                action="{{ route('expenditure-manages.destroy', $expenditure->slug) }}"
+                                                action="{{ route('expenditure-manages.destroy', $expenditure->id) }}"
                                                 class="d-inline-block pl-2">
                                                 @csrf
                                                 @method('DELETE')
