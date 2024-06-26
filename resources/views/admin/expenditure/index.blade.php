@@ -9,8 +9,32 @@
                     <div class="card-body">
 
                         <h5 class="card-title">All Expenditures</h5>
+                        
+                        <form method="GET" action="{{ route('expenditure-manages.index') }}">
+                            <div class="row mb-3">
+                                <div class="col-sm-4">
+                                    <input type="date" name="from_date" class="form-control" value="{{ request('from_date', $fromDate) }}">
+                                </div>
+                                <div class="col-sm-4">
+                                    <input type="date" name="to_date" class="form-control" value="{{ request('to_date', $toDate) }}">
+                                </div>
+                                <div class="col-sm-4">
+                                    <button type="submit" class="btn btn-primary btn-sm">Filter</button>
+                                    <a href="{{ route('expenditure-manages.index') }}" type="submit"
+                                    class="btn btn-sm btn-danger">Clear</a>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h4><strong>Total Credit</strong>: <span class="text-success">{{ number_format($totalCredit, 2) }}</span></h4>
+                            </div>
+                            <div class="col-sm-6">
+                                <h4><strong>Total Debit</strong>: <span class="text-danger">{{ number_format($totalDebit, 2) }}</span></h4>
+                            </div>
+                        </div>
                         @if (Session::has('msg'))
-                            <p class="alert alert-info">{{ Session::get('msg') }}</p>
+                            <p id="flash-message" class="alert alert-info">{{ Session::get('msg') }}</p>
                         @endif
                         <a class="btn btn-sm btn-outline-success float-end"
                             href="{{ route('expenditure-manages.create') }}">Add
@@ -39,7 +63,7 @@
                                                 class="{{ getExpenditureType($expenditure->debit_or_credit) }}">{{ $expenditure->debit_or_credit }}</span>
                                         </td>
                                         <td>{{ $expenditure->note }}</td>
-                                        <td> {{ \Carbon\Carbon::parse($expenditure->join_date)->format('dM, Y h:i A') }}
+                                        <td> {{ \Carbon\Carbon::parse($expenditure->created_at)->format('dM, Y h:i A') }}
                                         </td>
                                         <td>
                                             <a href="{{ route('expenditure-manages.edit', encrypt($expenditure->id)) }}"><i

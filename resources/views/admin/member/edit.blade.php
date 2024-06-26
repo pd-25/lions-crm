@@ -10,7 +10,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Edit Member</h5>
                         @if (Session::has('msg'))
-                            <p class="alert alert-info">{{ Session::get('msg') }}</p>
+                            <p id="flash-message" class="alert alert-info">{{ Session::get('msg') }}</p>
                         @endif
                         <form action="{{ route('members.update', $member->slug) }}" method="POST"
                             enctype="multipart/form-data">

@@ -73,8 +73,17 @@
                 });
             });
         });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const flashMessage = document.getElementById('flash-message');
+            if (flashMessage) {
+                setTimeout(() => {
+                    flashMessage.remove();
+                }, 3000);
+            }
+        });
     </script>
-@yield('script')
+    @yield('script')
 </body>
 
 </html>

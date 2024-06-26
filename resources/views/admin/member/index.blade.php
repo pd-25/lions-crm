@@ -10,7 +10,7 @@
 
                         <h5 class="card-title">All Members</h5>
                         @if (Session::has('msg'))
-                            <p class="alert alert-info">{{ Session::get('msg') }}</p>
+                            <p id="flash-message" class="alert alert-info">{{ Session::get('msg') }}</p>
                         @endif
                         <a class="btn btn-sm btn-outline-success float-end" href="{{ route('members.create') }}">Add
                             Member</a>

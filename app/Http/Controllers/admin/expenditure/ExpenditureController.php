@@ -17,10 +17,17 @@ class ExpenditureController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $fromDate = $request->input('from_date');
+        $toDate = $request->input('to_date');
+    
         return view('admin.expenditure.index', [
-            'expenditures' => $this->expenditureInterface->getAllExpenditures()->paginate(20)
+            'expenditures' => $this->expenditureInterface->getAllExpenditures($request)->paginate(20),
+            'totalCredit' => $this->expenditureInterface->getSeperateExpenditureTotal(ExpenditureTypeEnum::CREDIT, $fromDate, $toDate),
+            'totalDebit' => $this->expenditureInterface->getSeperateExpenditureTotal(ExpenditureTypeEnum::DEBIT, $fromDate, $toDate),
+            'fromDate' => $fromDate,
+            'toDate' => $toDate
         ]);
     }
 
@@ -39,9 +46,10 @@ class ExpenditureController extends Controller
     {
         $data = $request->validate([
             'ammount' => 'required|numeric',
-            'debit_or_credit' => 'required|in::' . ExpenditureTypeEnum::DEBIT . ',' . ExpenditureTypeEnum::CREDIT,
+            'debit_or_credit' => 'required|in:' . implode(',', ExpenditureTypeEnum::values()),
             'note' => 'required|string|max:1000'
         ]);
+
         if ($this->expenditureInterface->storeExpenditure($data)) {
             return redirect()->route('expenditure-manages.index')->with('msg', 'Expenditure Added Successfully..');
         } else {
@@ -72,7 +80,17 @@ class ExpenditureController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $data = $request->validate([
+            'ammount' => 'required|numeric',
+            'debit_or_credit' => 'required|in:' . implode(',', ExpenditureTypeEnum::values()),
+            'note' => 'required|string|max:1000'
+        ]);
+
+        if ($this->expenditureInterface->updateExpenditure($data, $id)) {
+            return back()->with('msg', 'Expenditure Updated Successfully..');
+        } else {
+            return back()->with('msg', 'Some error occur..');
+        }
     }
 
     /**
@@ -80,6 +98,10 @@ class ExpenditureController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        if ($this->expenditureInterface->deleteExpenditure($id)) {
+            return back()->with('msg', 'Expenditure Deleted Successfully..');
+        } else {
+            return back()->with('msg', 'Some error occur..');
+        }
     }
 }

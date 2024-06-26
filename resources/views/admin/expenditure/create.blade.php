@@ -10,13 +10,12 @@
                     <div class="card-body">
                         <h5 class="card-title">Add New Expenditure</h5>
                         <form action="{{ route('expenditure-manages.store') }}" method="POST" enctype="multipart/form-data">
-                            @method('POST')
                             @csrf
 
                             <div class="row mb-3">
-                                <label for="inputText" class="col-sm-2 col-form-label">Ammount</label>
+                                <label for="inputText" class="col-sm-2 col-form-label">Amount</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="ammount" class="form-control" >
+                                    <input type="text" name="ammount" class="form-control" value="{{ old('ammount') }}">
                                     @error('ammount')
                                         <span class="text-danger" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -28,8 +27,9 @@
                                 <label for="inputEmail" class="col-sm-2 col-form-label">Type</label>
                                 <div class="col-sm-10">
                                     <select name="debit_or_credit" class="form-control">
-                                        @foreach (\App\enum\ExpenditureTypeEnum::values() as $value)
-                                            <option value="{{ $value }}">{{ $value }}</option>
+                                        <option value="">-select-</option>
+                                        @foreach (\App\Enum\ExpenditureTypeEnum::values() as $value)
+                                            <option value="{{ $value }}" {{ old('debit_or_credit') == $value ? 'selected' : '' }}>{{ $value }}</option>
                                         @endforeach
                                     </select>
                                     @error('debit_or_credit')
@@ -43,7 +43,7 @@
                             <div class="row mb-3">
                                 <label for="inputNumber" class="col-sm-2 col-form-label">Note</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="note" class="form-control" >
+                                    <input type="text" name="note" class="form-control" value="{{ old('note') }}">
                                     @error('note')
                                         <span class="text-danger" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -52,13 +52,10 @@
                                 </div>
                             </div>
                             
-
-
                             <div class="row mb-3">
                                 <div class="col-sm-12">
                                     <button type="submit" class="btn btn-sm btn-primary float-end m-2">Submit Form</button>
-                                    <a href="{{ route('expenditure-manages.index') }}" type="submit"
-                                        class="btn btn-sm btn-danger float-end m-2">Cancel</a>
+                                    <a href="{{ route('expenditure-manages.index') }}" class="btn btn-sm btn-danger float-end m-2">Cancel</a>
                                 </div>
                             </div>
 

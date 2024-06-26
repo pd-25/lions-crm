@@ -9,14 +9,19 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Edit Expenditure</h5>
-                        <form action="{{ route('expenditure-manages.update', $expenditure->id) }}" method="POST" enctype="multipart/form-data">
-                            @method('POST')
+                        @if (Session::has('msg'))
+                            <p id="flash-message" class="alert alert-info">{{ Session::get('msg') }}</p>
+                        @endif
+                        <form action="{{ route('expenditure-manages.update', $expenditure->id) }}" method="POST"
+                            enctype="multipart/form-data">
+                            @method('PUT')
                             @csrf
 
                             <div class="row mb-3">
                                 <label for="inputText" class="col-sm-2 col-form-label">Ammount</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="ammount" class="form-control" value="{{$expenditure->ammount}}">
+                                    <input type="text" name="ammount" class="form-control"
+                                        value="{{ $expenditure->ammount }}">
                                     @error('ammount')
                                         <span class="text-danger" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -29,7 +34,9 @@
                                 <div class="col-sm-10">
                                     <select name="debit_or_credit" class="form-control">
                                         @foreach (\App\enum\ExpenditureTypeEnum::values() as $value)
-                                            <option value="{{ $value }}">{{ $value }}</option>
+                                            <option value="{{ $value }}"
+                                                {{ $expenditure->debit_or_credit == $value ? 'selected' : '' }}>
+                                                {{ $value }}</option>
                                         @endforeach
                                     </select>
                                     @error('debit_or_credit')
@@ -43,7 +50,8 @@
                             <div class="row mb-3">
                                 <label for="inputNumber" class="col-sm-2 col-form-label">Note</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="note" class="form-control" >
+                                    <input type="text" name="note" class="form-control"
+                                        value="{{ $expenditure->note }}">
                                     @error('note')
                                         <span class="text-danger" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -51,7 +59,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            
+
 
 
                             <div class="row mb-3">
