@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -47,9 +49,11 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-    /**
-     * Boot the model.
-     */
+
+    public function scopeRole($query): Builder
+    {
+        return $query->where("role", 0);
+    }
     /**
      * Boot the model.
      */
