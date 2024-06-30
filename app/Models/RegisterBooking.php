@@ -32,11 +32,8 @@ class RegisterBooking extends Model
     {
         $slug = Str::slug($name);
         $originalSlug = $slug;
-        $counter = 1;
-
         while (User::where('slug', $slug)->exists()) {
-            $slug = $originalSlug . '-' . $counter;
-            $counter++;
+            $slug = $originalSlug . '-' . time();
         }
 
         return $slug;
@@ -59,10 +56,12 @@ class RegisterBooking extends Model
 
     public function getBookingTypeOrOperationAttribute()
     {
-        if (!empty($this->booking_type_id) && $this->booking_type_id != '') {
-            return $this->bookingType->type_name;
+        if ($this->booking_type_id == config('constants.operation_id') && $this->operation_scheme_id != null) {
+            return $this->operationScheme?->name.'<span class="text-danger">(Operation)</span>';
         }
-        return $this->operationScheme?->name.'<span class="text-danger">(Operation)</span>';
+        return $this->bookingType?->type_name ;
+
+       
     }
     public function getCreatedAtAttribute($value)
     {

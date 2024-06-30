@@ -67,6 +67,7 @@ class BookingRegisterRepository implements BookingRegisterInterface
         try {
             $bookingData['user_id'] = $this->checkUserByNumber($userData);
             $bookingData['booking_id'] = $this->generateUniqueBookingId();
+            // dd($bookingData);
             $createBooking = $this->bookingRegisterModel->create($bookingData);
             if ($createBooking instanceof RegisterBooking) {
                 return true;

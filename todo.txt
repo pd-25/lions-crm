@@ -1,3 +1,2 @@
-Created Expenditure Route, Now to to
-1. Create(Amount, Debit/Credit, Note)
-2. Edit, Delete
+in bookinglist pdf invoice for each booking in both admin and patient
+patient list, and view paitent all booking
