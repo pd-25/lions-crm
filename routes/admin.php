@@ -6,6 +6,7 @@ use App\Http\Controllers\admin\dashboard\DashboardController;
 use App\Http\Controllers\admin\expenditure\ExpenditureController;
 use App\Http\Controllers\admin\member\MemberController;
 use App\Http\Controllers\admin\operationschemes\OperationSchemesController;
+use App\Http\Controllers\admin\patient\PatientController;
 use App\Http\Controllers\admin\registerbooking\RegisterBookingController;
 use App\Http\Middleware\Admin;
 use Illuminate\Support\Facades\Route;
@@ -16,6 +17,8 @@ Route::post('admin/login', [AuthController::class, 'login'])->name('admin.login'
 Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('admin.dashboard');
     Route::resource('/members', MemberController::class);
+    Route::resource('/patients', PatientController::class)->except(['create', 'edit']);
+    
     Route::resource('/operation-schemes', OperationSchemesController::class);
     Route::resource('/register-bookings', RegisterBookingController::class);
     Route::resource('/booking-types', BookingTypesController::class);

@@ -32,11 +32,18 @@
                 
             </ul>
         </li>
+        <li class="nav-item {{ Route::is('patients.index') ? 'active' : ''}}">
+            <a class="nav-link " href="{{route('patients.index')}}">
+                <i class="ri-group-fill"></i>
+                <span>Patients</span>
+            </a>
         <li class="nav-item {{ Route::is('members.index') ? 'active' : ''}}">
             <a class="nav-link " href="{{route('members.index')}}">
                 <i class="ri-group-fill"></i>
                 <span>Members</span>
             </a>
+        </li>
+       
         </li>
         <li class="nav-item {{ Route::is('operation-schemes.index') ? 'active' : ''}}">
             <a class="nav-link " href="{{route('operation-schemes.index')}}">

@@ -2,12 +2,12 @@
 
     <ul class="sidebar-nav" id="sidebar-nav">
 
-        {{-- <li class="nav-item {{ Route::is('admin.dashboard') ? 'active' : ''}}">
-            <a class="nav-link " href="{{route('admin.dashboard')}}">
+        <li class="nav-item {{ Route::is('employee.patients.index') ? 'active' : ''}}">
+            <a class="nav-link " href="{{route('employee.patients.index')}}">
                 <i class="bi bi-grid"></i>
-                <span>Dashboard</span>
+                <span>Patients</span>
             </a>
-        </li> --}}
+        </li>
         
         <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse"

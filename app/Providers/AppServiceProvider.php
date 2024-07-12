@@ -9,6 +9,8 @@ use App\core\expenditure\ExpenditureRepository;
 use App\core\member\MemberInterface;
 use App\core\member\MemberRepository;
 use App\core\operationschemes\OperationSchemeInterface;
+use App\core\patient\PatientInterface;
+use App\core\patient\PatientRepository;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
 
@@ -24,6 +26,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(OperationSchemeInterface::class, \App\core\operationschemes\OperationSchemeRepository::class);
         $this->app->bind(BookingRegisterInterface::class, BookingRegisterRepository::class);
         $this->app->bind(ExpenditureInterface::class, ExpenditureRepository::class);
+        $this->app->bind(PatientInterface::class, PatientRepository::class);
     }
 
     /**

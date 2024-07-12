@@ -8,5 +8,5 @@ interface BookingRegisterInterface {
     public function createBookingRegister(array $userData, array $bookingData);
     public function getBookingRegister($slug);
     
-    
+    public function generatePdf($slug);
 }

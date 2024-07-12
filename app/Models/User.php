@@ -76,11 +76,9 @@ class User extends Authenticatable
     {
         $slug = Str::slug($name);
         $originalSlug = $slug;
-        $counter = 1;
 
         while (User::where('slug', $slug)->exists()) {
-            $slug = $originalSlug . '-' . $counter;
-            $counter++;
+            $slug = $originalSlug . '-' . time();
         }
 
         return $slug;

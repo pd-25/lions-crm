@@ -7,7 +7,7 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Booking Details</h5>
-                    <a class="btn btn-sm btn-outline-secondary float-end" href="{{ route('register-bookings.index') }}">Back to List</a>
+                    <a class="btn btn-sm btn-outline-secondary float-end" href="javascript:void(0)" onclick="window.history.back();">Back to List</a>
 
                     <div class="row mb-3">
                         <label class="col-sm-2 col-form-label"><b> Booking ID</b></label>

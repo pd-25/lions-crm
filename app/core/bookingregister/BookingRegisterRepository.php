@@ -6,6 +6,7 @@ use App\core\bookingregister\BookingRegisterInterface;
 use App\Models\BookingType;
 use App\Models\RegisterBooking;
 use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Log;
 use illuminate\Support\Str;
 
@@ -99,21 +100,22 @@ class BookingRegisterRepository implements BookingRegisterInterface
         }
     }
 
-    
+
 
     private function generateUniqueBookingId(): int
     {
         $prefix = rand(100, 999);
-        $random_number = rand(100000, 999999); 
-        $booking_id = $prefix . sprintf("%06d", $random_number); 
+        $random_number = rand(100000, 999999);
+        $booking_id = $prefix . sprintf("%06d", $random_number);
         $existing_booking = RegisterBooking::where('booking_id', $booking_id)->exists();
         if ($existing_booking) {
             return $this->generateUniqueBookingId();
         }
-        return intval($booking_id); 
+        return intval($booking_id);
     }
 
-    public function getBookingRegister($slug){
+    public function getBookingRegister($slug)
+    {
         return $this->bookingRegisterModel->where('slug', $slug)->with('patient', 'bookingType')->firstOrFail();
     }
 
@@ -121,5 +123,40 @@ class BookingRegisterRepository implements BookingRegisterInterface
     {
         Log::debug('ErrorFile-', [$th->getFile()]);
         Log::debug('ErrorMsg-', [$th->getMessage()]);
+    }
+
+    // public function generatePdf($slug)
+    // {
+    //     $bookingInfo = $this->getBookingRegister($slug);
+    //     $pdf = Pdf::loadView('pdf.registerbooking-pdf', [
+    //         'bookingInfo' => $bookingInfo
+    //     ])->setPaper('a4','landscape')->setOptions(['defaultFont' => 'sans-serif']);
+
+    //     return $pdf->download('booking-'.$bookingInfo->booking_id.'.pdf');
+    // }
+    public function generatePdf($slug)
+    {
+        $bookingInfo = $this->getBookingRegister($slug);
+        // return view('pdf.registerbooking-pdf', [
+        //     'bookingInfo' => $bookingInfo
+        // ]
+        // );
+        
+
+        // Custom paper size close to A4 landscape dimensions (in points)
+        $customPaper = [0, 0, 841.89, 595.28];
+
+        $pdf = Pdf::loadView('pdf.registerbooking-pdf', [
+            'bookingInfo' => $bookingInfo
+        ])
+        // ->setPaper('letter', 'portrait')
+        ->setPaper($customPaper, 'legal')
+            ->setOptions([
+                'defaultFont' => 'sans-serif',
+                'isHtml5ParserEnabled' => true,
+                'isRemoteEnabled' => true,
+            ]);
+
+        return $pdf->download('booking-' . $bookingInfo->booking_id . '.pdf');
     }
 }

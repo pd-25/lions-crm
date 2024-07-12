@@ -39,6 +39,8 @@
                                         <td>
                                             <a href="{{ route('employee.register-bookings.show', $allbooking->slug) }}"><i
                                                     class="ri-eye-fill"></i></a>
+                                            <a href="{{ route('employee.register-bookings.download', $allbooking->slug) }}"><i
+                                                class="ri-download-fill"></i></a>
 
                                         </td>
                                     </tr>
