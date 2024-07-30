@@ -39,8 +39,10 @@
                                         <td>
                                             <a href="{{ route('employee.register-bookings.show', $allbooking->slug) }}"><i
                                                     class="ri-eye-fill"></i></a>
-                                            <a href="{{ route('employee.register-bookings.download', $allbooking->slug) }}"><i
-                                                class="ri-download-fill"></i></a>
+                                            {{-- <a href="{{ route('employee.register-bookings.download', $allbooking->slug) }}"><i
+                                                class="ri-download-fill"></i></a> --}}
+                                                <a href="#" onclick="window.print(); return false;"><i class="ri-download-fill"></i></a>
+
 
                                         </td>
                                     </tr>
@@ -57,4 +59,9 @@
         </div>
 
     </section>
+@endsection
+@section('script')
+<script type="text/javascript">
+    window.print();
+</script>
 @endsection

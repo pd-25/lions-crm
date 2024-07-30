@@ -63,7 +63,7 @@
             </a>
         </li>
 
-        <li class="nav-item ">
+        {{-- <li class="nav-item ">
             <a class="nav-link " href="#">
                 <i class="ri-group-fill"></i>
                 <span>Remunaration</span>
@@ -75,7 +75,7 @@
                 <i class="ri-group-fill"></i>
                 <span>Event Mgmt</span>
             </a>
-        </li>
+        </li> --}}
         
 
     </ul>
