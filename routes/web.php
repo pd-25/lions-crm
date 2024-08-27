@@ -23,7 +23,7 @@ Route::group(['middleware' => 'receptionist'], function () {
     Route::get('/patients', [PatientController::class, 'index'])->name('employee.patients.index');
     Route::get('/patients/show/{id}', [PatientController::class, 'show'])->name('employee.patients.show');
     Route::get('/generate-pdf/{booking_slug}', [PatientController::class, 'downloadPdf'])->name('employee.register-bookings.download');
-    
+    Route::post('/update-payment/{register_booking_slug}', [App\Http\Controllers\HomeController::class, 'updatePayment'])->name('employee.updatePayment');
 
 });
 

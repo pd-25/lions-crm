@@ -11,7 +11,7 @@ class RegisterBooking extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['booking_id','user_id', 'patient_name','phone_number','address','amount', 'about_patient_problem', 'booking_type_id', 'operation_scheme_id'];
+    protected $fillable = ['booking_id','user_id', 'patient_name','phone_number','address','amount', 'about_patient_problem', 'booking_type_id', 'operation_scheme_id', 'initial_paid_amount'];
 
     protected static function boot()
     {
@@ -67,5 +67,10 @@ class RegisterBooking extends Model
     {
         // return Carbon::parse($value)->setTimezone(config('app.timezone'))->toDateTimeString();
         return Carbon::parse($value)->timezone('Asia/Kolkata')->toDateTimeString();
+    }
+
+    public function bookingPaymrnts()
+    {
+        return $this->hasMany(BookingPayment::class, 'register_booking_id', 'id');
     }
 }

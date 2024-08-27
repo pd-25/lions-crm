@@ -18,12 +18,13 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('admin.dashboard');
     Route::resource('/members', MemberController::class);
     Route::resource('/patients', PatientController::class)->except(['create', 'edit']);
-    
+
     Route::resource('/operation-schemes', OperationSchemesController::class);
     Route::resource('/register-bookings', RegisterBookingController::class);
     Route::resource('/booking-types', BookingTypesController::class);
     Route::get('/check-patient-privious-bookings', [RegisterBookingController::class, 'checkPatientPriviousBooking'])->name('admin.checkPatientPriviousBooking');
     Route::get('/check-bookingtype-operation', [RegisterBookingController::class, 'checkIfBookingTypeOperation'])->name('admin.checkIfBookingTypeOperation');
+    Route::post('/update-payment/{register_booking_slug}', [RegisterBookingController::class, 'updatePayment'])->name('admin.updatePayment');
     Route::resource('/expenditure-manages', ExpenditureController::class);
 
 
@@ -32,4 +33,4 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 });
 //these routes is common for both employee and admin
 Route::get('/check-patient-privious-bookings', [RegisterBookingController::class, 'checkPatientPriviousBooking'])->name('admin.checkPatientPriviousBooking');
-    Route::get('/check-bookingtype-operation', [RegisterBookingController::class, 'checkIfBookingTypeOperation'])->name('admin.checkIfBookingTypeOperation');
+Route::get('/check-bookingtype-operation', [RegisterBookingController::class, 'checkIfBookingTypeOperation'])->name('admin.checkIfBookingTypeOperation');

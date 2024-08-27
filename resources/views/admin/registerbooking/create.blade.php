@@ -105,11 +105,23 @@
 
                                 </div>
 
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <label for="inputText" class="col-form-label">Amount</label>
                                     <div>
-                                        <input type="number" value="" name="amount" class="form-control">
+                                        <input type="number" value="" name="amount" class="form-control" readonly>
                                         @error('amount')
+                                            <span class="text-danger" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="inputText" class="col-form-label">Paid Amount</label>
+                                    <div>
+                                        <input type="number" value="" name="initial_paid_amount" class="form-control">
+                                        @error('initial_paid_amount')
                                             <span class="text-danger" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -268,6 +280,8 @@
             formData.append('address', document.getElementById('address').value);
             formData.append('booking_type_id', document.querySelector('select[name="booking_type_id"]').value);
             formData.append('amount', document.querySelector('input[name="amount"]').value);
+            formData.append('initial_paid_amount', document.querySelector('input[name="initial_paid_amount"]').value);
+            
             formData.append('about_patient_problem', document.querySelector('textarea[name="about_patient_problem"]')
             .value);
 

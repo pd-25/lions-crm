@@ -3,6 +3,7 @@
 namespace App\core\bookingregister;
 
 use App\core\bookingregister\BookingRegisterInterface;
+use App\Models\BookingPayment;
 use App\Models\BookingType;
 use App\Models\RegisterBooking;
 use App\Models\User;
@@ -53,9 +54,28 @@ class BookingRegisterRepository implements BookingRegisterInterface
         }
     }
 
-    public function getAllBookings()
+    public function getAllBookings($request)
     {
-        return $this->bookingRegisterModel->with('patient')->orderByDesc('id');
+        $query = $this->bookingRegisterModel->with('patient');
+
+        if (isset($request->search_text) && !empty($request->search_text)) {
+            $searchText = $request->search_text;
+
+            $query->where(function ($q) use ($searchText) {
+                $q->where('booking_id',  $searchText)
+                    ->orWhereHas('patient', function ($query) use ($searchText) {
+                        $query->where('name', 'like', "%{$searchText}%")
+                            ->orWhere('phone_number', 'like', "%{$searchText}%");
+                    });
+            });
+        }
+
+        return $query->orderByDesc('id');
+        // if(isset($request->search_text) && !empty($request->search_text)){
+        //     $this->bookingRegisterModel->orWhere("booking_id", $request->search_text)
+        //                                 ->orWhere()
+        // }
+        // return $this->bookingRegisterModel->with('patient')->orderByDesc('id');
     }
 
     public function getAllBookingTypes()
@@ -71,6 +91,10 @@ class BookingRegisterRepository implements BookingRegisterInterface
             // dd($bookingData);
             $createBooking = $this->bookingRegisterModel->create($bookingData);
             if ($createBooking instanceof RegisterBooking) {
+                BookingPayment::create([
+                    "amount" => $bookingData["initial_paid_amount"],
+                    "register_booking_id" => $createBooking->id
+                ]);
                 return true;
             }
             return false;
@@ -141,7 +165,7 @@ class BookingRegisterRepository implements BookingRegisterInterface
         //     'bookingInfo' => $bookingInfo
         // ]
         // );
-        
+
 
         // Custom paper size close to A4 landscape dimensions (in points)
         $customPaper = [0, 0, 841.89, 595.28];
@@ -149,8 +173,8 @@ class BookingRegisterRepository implements BookingRegisterInterface
         $pdf = Pdf::loadView('pdf.registerbooking-pdf', [
             'bookingInfo' => $bookingInfo
         ])
-        // ->setPaper('letter', 'portrait')
-        ->setPaper($customPaper, 'legal')
+            // ->setPaper('letter', 'portrait')
+            ->setPaper($customPaper, 'legal')
             ->setOptions([
                 'defaultFont' => 'sans-serif',
                 'isHtml5ParserEnabled' => true,
@@ -158,5 +182,25 @@ class BookingRegisterRepository implements BookingRegisterInterface
             ]);
 
         return $pdf->download('booking-' . $bookingInfo->booking_id . '.pdf');
+    }
+
+    public function updatePayment($dueAmount, $booking_id, $originalAmount)
+    {
+        try {
+            $sumOfPaidAmounts = BookingPayment::where('register_booking_id', $booking_id)->sum('amount');
+            if ($dueAmount > ($originalAmount - $sumOfPaidAmounts)) {
+                return 2;
+            }
+            $updateAmount = BookingPayment::create([
+                "register_booking_id" => $booking_id,
+                "amount" => $dueAmount
+            ]);
+            if ($updateAmount) {
+                return true;
+            }
+        } catch (\Throwable $th) {
+            $this->getLogs($th);
+            return false;
+        }
     }
 }

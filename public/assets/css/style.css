@@ -1285,3 +1285,6 @@ h6 {
 .span-text-p-color {
     color: #0d6efd;
 }
+.more-btn {
+    cursor: pointer;
+}

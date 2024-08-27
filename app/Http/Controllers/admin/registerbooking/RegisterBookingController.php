@@ -17,10 +17,10 @@ class RegisterBookingController extends Controller
         $this->operationSchemeInterface = $operationSchemeInterface;
     }
 
-    public function index()
+    public function index(Request $request)
     {
         return view('admin.registerbooking.index', [
-            'allbookings' => $this->bookingRegisterInterface->getAllBookings()->paginate(10),
+            'allbookings' => $this->bookingRegisterInterface->getAllBookings($request)->paginate(10),
         ]);
     }
 
@@ -42,6 +42,7 @@ class RegisterBookingController extends Controller
                     'address' => 'required|string|max:200',
                     'booking_type_id' => 'required|exists:booking_types,id',
                     'amount' => 'required|numeric',
+                    'initial_paid_amount' => 'required|numeric',
                     'about_patient_problem' => 'nullable|max:500',
                     'operation_scheme_id' => $request->booking_type_id == config('constants.operation_id') ? 'required|exists:operation_schemes,id' : 'nullable',
                 ],
@@ -50,7 +51,7 @@ class RegisterBookingController extends Controller
                 ],
             );
             $userData = $request->only('patient_name', 'phone_number', 'address');
-            $bookingData = $request->only('booking_type_id', 'amount', 'about_patient_problem', 'operation_scheme_id');
+            $bookingData = $request->only('booking_type_id', 'amount', 'about_patient_problem', 'operation_scheme_id', 'initial_paid_amount');
             if ($this->bookingRegisterInterface->createBookingRegister($userData, $bookingData)) {
                 return response()->json([
                     "status" => "success",
@@ -107,5 +108,30 @@ class RegisterBookingController extends Controller
             'status' => true,
             'allBookingTypes' => $this->operationSchemeInterface->getAllOperationSchemes()->get(),
         ]);
+    }
+
+    public function updatePayment(Request $request, $booking_slug)
+    {
+        $checkBooking = $this->bookingRegisterInterface->getBookingRegister($booking_slug);
+        if ($checkBooking) {
+            $updatingPayment = $this->bookingRegisterInterface->updatePayment($request->input("due_amount"), $checkBooking->id, $checkBooking->amount);
+          
+            if ($updatingPayment === 2) {
+                return response()->json([
+                    "status" => false,
+                    "msg" => "Given amount should not be greter than due amount"
+                ]);
+            } elseif ($updatingPayment === false) {
+                return response()->json([
+                    "status" => false,
+                    "msg" => "Some error occur."
+                ]);
+            } else {
+                return response()->json([
+                    "status" => true,
+                    "msg" => "Payment updated successfully."
+                ]);
+            }
+        }
     }
 }

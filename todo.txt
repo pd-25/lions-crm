@@ -1,17 +1,2 @@
-I'm creating an daily meal delivery web application. 
-1. There are 4 userstypes - End User, Resturent, Delivery boy, Admin.
-2. Resturent will register and list it's daily menu for breakfast lunch and dinner. 
-3. foreach day resturent can update it's menu availability.
-4. When end user will open the site, by default he will be shown only the resturent located in 2km distance from user's current location.
-5. then user will see resturent's menu and then order for food.
-6. He can pay instantly online or cash on delivery.
-7. User can set his monthly menu, like one can set his daily meal(lunch, dinner, brekfast) for next 30days(so that he doesn't need to order everyday).
-8. The orders will be listed to specific resturent's dashboard(today's order list). When new order comes the order will be shown in real time in the list. 
-9. Once the order is ready resturent will assign the the order to a delivery boy for delivery. 
-10. In the delivery boy's dashboard he can only show the order item and delivery location.
-11. once delivery boy delivered, will make it done.
-Need suggestion.
-For frontend I think nextjs is good. Now there are 4 frontend User Website, and Admin, Hotel and delivery panel(it will look same frontend).
-And backend I decided one of these-  Fastapi.
-
-I want to start this project , build me a standared (working plan step by step)progress plan week or day wise
+1. in booking details show payment details
+2. implement the steps in reception panel

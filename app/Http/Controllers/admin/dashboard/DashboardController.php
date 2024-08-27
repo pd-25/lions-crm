@@ -6,6 +6,7 @@ use App\core\bookingregister\BookingRegisterInterface;
 use App\core\member\MemberInterface;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
@@ -15,13 +16,13 @@ class DashboardController extends Controller
         $this->memberInterface = $memberInterface;
         $this->bookingRegisterInterface = $bookingRegisterInterface;
     }
-    public function dashboard()
+    public function dashboard(Request $request)
     {
         return view('admin.dashboard.dashboard', [
             'membersCount' => $this->memberInterface->getAllMembers()->count(),
-            'bookingCount' => $this->bookingRegisterInterface->getAllBookings()->count(),
+            'bookingCount' => $this->bookingRegisterInterface->getAllBookings($request)->count(),
             'patientCount' => User::query()->role()->count(),
-            'latestBookings' => $this->bookingRegisterInterface->getAllBookings()->paginate(5),
+            'latestBookings' => $this->bookingRegisterInterface->getAllBookings($request)->paginate(5),
         ]);
     }
 }
