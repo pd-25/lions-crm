@@ -42,11 +42,15 @@
                                         <td>{!! $allbooking->booking_type_or_operation !!}</td>
                                         <td>{{ $allbooking->patient->name }}</td>
                                         <td>{{ $allbooking->patient->phone_number }}</td>
-                                        <td>{{ $allbooking->amount }}</td>
+                                        <td><b>{{ $allbooking->amount }}</b>
+                                            <br>Paid: <span class="text-success">{{$allbooking->bookingPaymrnts->sum("amount")}}</span><br>
+                                            Due: <span class="text-danger">{{($allbooking->amount -$allbooking->bookingPaymrnts->sum("amount"))}}</span>
+                                        </td>
                                         <td>{{ \Carbon\Carbon::parse($allbooking->created_at)->format('dM, Y h:i A') }}</td>
                                         <td>
-                                            <a href="{{ route('register-bookings.show', $allbooking->slug) }}"><i
+                                            <a title="View Details" href="{{ route('register-bookings.show', $allbooking->slug) }}"><i
                                                     class="ri-eye-fill"></i></a>
+                                                    <a target="_blank" title="Print" href="{{route('get-print', $allbooking->slug)}}" ><i class="ri-download-fill"></i></a>
                                             {{-- @dump($allbooking->amount, $allbooking->bookingPaymrnts->sum('amount')) --}}
                                             @if (
                                                 $allbooking->bookingPaymrnts->sum('amount') != $allbooking->amount &&

@@ -8,6 +8,7 @@ use App\Models\BookingType;
 use App\Models\RegisterBooking;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use illuminate\Support\Str;
 
@@ -81,6 +82,27 @@ class BookingRegisterRepository implements BookingRegisterInterface
     public function getAllBookingTypes()
     {
         return $this->bookingTypeModel->orderByDesc('id')->get();
+    }
+
+    public function getSingleBookingType($slug)
+    {
+        return $this->bookingTypeModel->where('slug', $slug)->first();
+    }
+    public function addNewBookingType(array $typeData) {
+        $slug = Str::slug($typeData['type_name']);
+        $slug_count = DB::table('booking_types')->where('slug', $slug)->count();
+        if ($slug_count > 0) {
+            $slug = random_int(100000, 999999) . '-' . $slug;
+        }
+        $typeData['slug'] = $slug;
+        return $this->bookingTypeModel->create($typeData);
+    }
+    public function updateBookingType($data, $slug) {
+        
+        return $this->bookingTypeModel->where('slug', $slug)->update($data);
+    }
+    public function deletebookingType($slug){
+        return $this->bookingTypeModel->where('slug', $slug)->delete();
     }
 
     public function createBookingRegister(array $userData, array $bookingData)

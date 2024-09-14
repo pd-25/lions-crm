@@ -24,7 +24,7 @@
                 </li>
 
                 <li class="">
-                    <a class="{{ Route::is('booking-types.index') ? 'active' : ''}}" href="{{route('booking-types.index')}}">
+                    <a class="{{ Route::is('employee-booking-types.index') ? 'active' : ''}}" href="{{route('employee-booking-types.index')}}">
                         <i class="ri-group-fill"></i>
                         <span>Booking Type</span>
                     </a>

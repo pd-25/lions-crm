@@ -30,10 +30,10 @@
         <div class="copyright">
             &copy; Copyright <strong><span>{{ env('APP_NAME') }}</span></strong>. All Rights Reserved
         </div>
-        <div class="credits">
+        {{-- <div class="credits">
 
             Designed by <a href="javascript:void(0)">Pradipta</a>
-        </div>
+        </div> --}}
     </footer>
 
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i

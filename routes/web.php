@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\employee\patient\PatientController;
+use App\Http\Controllers\EmployeeBookingTypeController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -8,9 +10,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/pdf', function () {
-    return view('pdf.registerbooking-pdf');
-});
+Route::get('/get-print/{slug}',[HomeController::class, 'getPrint'])->name("get-print");
 
 
 Auth::routes();
@@ -24,6 +24,8 @@ Route::group(['middleware' => 'receptionist'], function () {
     Route::get('/patients/show/{id}', [PatientController::class, 'show'])->name('employee.patients.show');
     Route::get('/generate-pdf/{booking_slug}', [PatientController::class, 'downloadPdf'])->name('employee.register-bookings.download');
     Route::post('/update-payment/{register_booking_slug}', [App\Http\Controllers\HomeController::class, 'updatePayment'])->name('employee.updatePayment');
+    Route::resource('/employee-booking-types', EmployeeBookingTypeController::class);
+
 
 });
 

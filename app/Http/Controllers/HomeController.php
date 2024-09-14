@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\core\bookingregister\BookingRegisterInterface;
+use App\Traits\AllTrait;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
 class HomeController extends Controller
 {
+    use AllTrait;
     protected $bookingRegisterInterface;
 
     /**
@@ -101,4 +103,6 @@ class HomeController extends Controller
             }
         }
     }
+
+    
 }

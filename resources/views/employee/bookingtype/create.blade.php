@@ -1,4 +1,4 @@
-@extends('admin.layout.main')
+@extends('employee.layout.main')
 @section('title', 'Create Booking Type | ')
 @section('content')
     <section class="section dashboard">
@@ -9,7 +9,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Add New Booking Type</h5>
-                        <form action="{{ route('booking-types.store') }}" method="POST">
+                        <form action="{{ route('employee-booking-types.store') }}" method="POST">
                             @method('POST')
                             @csrf
                            
@@ -55,7 +55,7 @@
                             <div class="row mb-3">
                                 <div class="col-sm-12">
                                     <button type="submit" class="btn btn-sm btn-primary float-end m-2">Submit Form</button>
-                                    <a href="{{route('booking-types.index')}}" type="submit" class="btn btn-sm btn-danger float-end m-2">Cancel</a>
+                                    <a href="{{route('employee-booking-types.index')}}" type="submit" class="btn btn-sm btn-danger float-end m-2">Cancel</a>
                                 </div>
                             </div>
 

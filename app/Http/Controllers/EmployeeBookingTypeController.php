@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\admin\bookingtypes;
+namespace App\Http\Controllers;
 
 use App\core\bookingregister\BookingRegisterInterface;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class BookingTypesController extends Controller
+class EmployeeBookingTypeController extends Controller
 {
     private $bookingRegisterInterface;
     public function __construct(BookingRegisterInterface $bookingRegisterInterface){
@@ -14,7 +13,7 @@ class BookingTypesController extends Controller
     }
     public function index()
     {
-        return view('admin.bookingtype.index', [
+        return view('employee.bookingtype.index', [
             'bookingtypes' => $this->bookingRegisterInterface->getAllBookingTypes()
         ]);
     }
@@ -24,7 +23,7 @@ class BookingTypesController extends Controller
      */
     public function create()
     {
-        return view("admin.bookingtype.create");
+        return view("employee.bookingtype.create");
     }
 
     /**
@@ -39,7 +38,7 @@ class BookingTypesController extends Controller
 
         $insertMember = $this->bookingRegisterInterface->addNewBookingType($request->only('type_name', 'price', 'status'));
         if ($insertMember) {
-            return redirect()->route('booking-types.index')->with('msg', 'New Booking Added Successfully..');
+            return redirect()->route('employee-booking-types.index')->with('msg', 'New Booking Added Successfully..');
         } else {
             return back()->with('msg', 'Some error occur..');
         }
@@ -59,7 +58,7 @@ class BookingTypesController extends Controller
     public function edit(string $slug)
     {
         $data["bookingtype"] =  $this->bookingRegisterInterface->getSingleBookingType($slug);
-        return view("admin.bookingtype.edit", $data);
+        return view("employee.bookingtype.edit", $data);
 
     }
 
@@ -75,7 +74,7 @@ class BookingTypesController extends Controller
 
         $insertMember = $this->bookingRegisterInterface->updateBookingType($request->only('type_name', 'price', 'status'), $slug);
         if ($insertMember) {
-            return redirect()->route('booking-types.index')->with('msg', 'Booking Type Updated Successfully..');
+            return redirect()->route('employee-booking-types.index')->with('msg', 'Booking Type Updated Successfully..');
         } else {
             return back()->with('msg', 'Some error occur..');
         }

@@ -1,4 +1,5 @@
-@extends('employee.layout.main')
+@extends('admin.layout.main')
+
 @section('title', 'Patient Details | ')
 @section('content')
     <section class="section dashboard">
@@ -38,7 +39,7 @@
 
                         <div class="row mb-3">
                             <div class="col-sm-12">
-                                <a href="{{ route('employee.patients.index') }}" type="submit"
+                                <a href="{{ route('patients.index') }}" type="submit"
                                     class="btn btn-sm btn-danger float-end m-2">Back</a>
                             </div>
                         </div>
@@ -73,7 +74,7 @@
                                     <td>{{ $allbooking->amount }}</td>
                                     <td>{{ \Carbon\Carbon::parse($allbooking->created_at)->format('dM, Y h:i A') }}</td>
                                     <td>
-                                        <a href="{{ route('employee.register-bookings.show', $allbooking->slug) }}"><i
+                                        <a href="{{ route('register-bookings.show', $allbooking->slug) }}"><i
                                                 class="ri-eye-fill"></i></a>
                                         
                                     </td>

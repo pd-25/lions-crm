@@ -80,9 +80,9 @@
                                 </div>
                             </div>
 
-                            <div class="credits">
+                            {{-- <div class="credits">
                                 Designed by <a href="javascript:void(0)">Pradipta</a>
-                            </div>
+                            </div> --}}
 
                         </div>
                     </div>

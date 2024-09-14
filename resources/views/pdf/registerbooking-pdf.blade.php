@@ -264,10 +264,22 @@
             max-width: 100%;
             height: auto;
         }
+
+        @media print {
+            /* Print-specific styles */
+            @page {
+                margin: 0;
+            }
+
+            /* Hide headers and footers if applicable */
+            .no-print {
+                display: none;
+            }
+        }
     </style>
 </head>
 
-<body>
+<body  onload="window.print();">
 
     <section class="bg-yellow">
         <div class="container border-red">
@@ -301,6 +313,12 @@
             </div>
         </div>
     </section>
+
+    <script>
+        window.onload = function() {
+            window.print();
+        };
+    </script>
 
 </body>
 
