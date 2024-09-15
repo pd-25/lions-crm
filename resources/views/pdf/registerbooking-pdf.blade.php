@@ -17,7 +17,7 @@
             line-height: 18px;
             font-weight: 600;
             color: #cc6d57;
-            max-width: 100%;
+            max-width: 100%;    
         }
 
         h1 {
@@ -277,9 +277,122 @@
             }
         }
     </style>
+
+
+    <style>
+        @media print {
+            @page {
+                height: 50vh;
+                margin: 0;
+            }
+
+            body {
+                margin: 0;
+                padding: 0;
+            }
+
+            .container {
+                width: 100%;
+                page-break-after: always;
+            }
+
+            .half-page {
+                height: 50vh;
+                /* Half of the viewport height */
+                box-sizing: border-box;
+                padding: 10px;
+                /* Adjust padding as needed */
+            }
+
+            .bg-yellow {
+                background-color: #FFEB3B;
+                /* Adjust background color as needed */
+            }
+
+            .border-red {
+                border: 2px solid #cc6d57;
+                /* Adjust border color and width as needed */
+            }
+
+            .text-center {
+                text-align: center;
+            }
+
+            .text-right {
+                text-align: right;
+            }
+
+            .single-line {
+                margin: 5px 0;
+            }
+
+            .full-line {
+                display: inline-block;
+                width: 100%;
+                border-bottom: 1px solid #000;
+                text-align: left;
+            }
+
+            .donbtn {
+                font-weight: bold;
+                border: 1px solid #000;
+                padding: 5px;
+                display: inline-block;
+            }
+        }
+    </style>
+
+
+
 </head>
 
-<body  onload="window.print();">
+<body onload="window.print();">
+    <section class="bg-yellow">
+        <div class="container border-red half-page">
+            <div class="row" style="border-bottom:1px #cc6d57 solid; margin-bottom:20px;">
+                <div class="span-2">
+                    <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('pdf/images/logo.png'))) }}"
+                        style="max-width: 100%; height: auto;">
+                </div>
+
+                <div class="span-8 text-center">
+                    <h1>VISION</h1>
+                    <p class="head-cap">(Eye Hospital-Day Care Unit)</p>
+                    <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('pdf/images/logo-text.png'))) }}"
+                        style="margin-top:-20px; max-width: 100%; height: auto;">
+                    <p>135, Bowbazar Road, (Moti Roy Bandh), Nabadwip</p>
+                    <p style="margin-bottom:20px;"><span>STD- 03472</span><span style="padding-left:40px;">Phone:
+                            240-931</span></p>
+                </div>
+
+                <div class="span-2 text-right">
+                    <p><span class="color-red">No.</span> <span class="notxt">{{ $bookingInfo->booking_id }}</span></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="span-12">
+                    <p class="single-line">Name<strong class="full-line">{{ $bookingInfo?->patient?->name }}</strong>
+                    </p>
+                    <p class="single-line">Address<strong
+                            class="full-line">{{ $bookingInfo?->patient?->address }}</strong></p>
+                    <p class="single-line">&nbsp;<strong class="full-line"></strong></p>
+                </div>
+                <div class="span-12">
+                    <p class="text-center"><span class="donbtn">Donation Rs. {{ $bookingInfo->amount }}/-</span></p>
+                    <p class="text-right">Signature</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        window.onload = function() {
+            window.print();
+        };
+    </script>
+</body>
+
+{{-- <body  onload="window.print();">
 
     <section class="bg-yellow">
         <div class="container border-red">
@@ -320,6 +433,6 @@
         };
     </script>
 
-</body>
+</body> --}}
 
 </html>

@@ -5,11 +5,14 @@ namespace App\Http\Controllers\admin\registerbooking;
 use App\core\bookingregister\BookingRegisterInterface;
 use App\core\operationschemes\OperationSchemeInterface;
 use App\Http\Controllers\Controller;
+use App\Traits\AllTrait;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
 class RegisterBookingController extends Controller
 {
+    use AllTrait;
+
     private $bookingRegisterInterface, $operationSchemeInterface;
     public function __construct(BookingRegisterInterface $bookingRegisterInterface, OperationSchemeInterface $operationSchemeInterface)
     {

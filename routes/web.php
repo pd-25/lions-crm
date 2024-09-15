@@ -10,7 +10,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/get-print/{slug}',[HomeController::class, 'getPrint'])->name("get-print");
+// Route::get('/get-print/{slug}',[HomeController::class, 'getPrint'])->name("get-print");
 
 
 Auth::routes();

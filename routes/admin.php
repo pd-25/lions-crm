@@ -8,6 +8,7 @@ use App\Http\Controllers\admin\member\MemberController;
 use App\Http\Controllers\admin\operationschemes\OperationSchemesController;
 use App\Http\Controllers\admin\patient\PatientController;
 use App\Http\Controllers\admin\registerbooking\RegisterBookingController;
+use App\Http\Controllers\HomeController;
 use App\Http\Middleware\Admin;
 use Illuminate\Support\Facades\Route;
 
@@ -34,3 +35,5 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 //these routes is common for both employee and admin
 Route::get('/check-patient-privious-bookings', [RegisterBookingController::class, 'checkPatientPriviousBooking'])->name('admin.checkPatientPriviousBooking');
 Route::get('/check-bookingtype-operation', [RegisterBookingController::class, 'checkIfBookingTypeOperation'])->name('admin.checkIfBookingTypeOperation');
+Route::get('/get-print/{slug}',[RegisterBookingController::class, 'getPrint'])->name("get-print");
+
