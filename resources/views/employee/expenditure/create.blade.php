@@ -28,7 +28,7 @@
                                 <div class="col-sm-10">
                                     <select name="debit_or_credit" class="form-control">
                                         <option value="">-select-</option>
-                                        @foreach (\App\Enum\ExpenditureTypeEnum::values() as $value)
+                                        @foreach (\App\enum\ExpenditureTypeEnum::values() as $value)
                                             <option value="{{ $value }}" {{ old('debit_or_credit') == $value ? 'selected' : '' }}>{{ $value }}</option>
                                         @endforeach
                                     </select>
