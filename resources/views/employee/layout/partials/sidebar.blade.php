@@ -49,12 +49,12 @@
 
         
 
-        {{-- <li class="nav-item {{ Route::is('expenditure-manages.index') ? 'active' : ''}}">
-            <a class="nav-link " href="{{route('expenditure-manages.index')}}">
+        <li class="nav-item {{ Route::is('recep-expenditure-manages.index') ? 'active' : ''}}">
+            <a class="nav-link " href="{{route('recep-expenditure-manages.index')}}">
                 <i class="ri-group-fill"></i>
                 <span>Expenditure Mgmt</span>
             </a>
-        </li> --}}
+        </li>
         
 
     </ul>

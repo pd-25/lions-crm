@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\employee\expenditure\ExpenditureController;
 use App\Http\Controllers\employee\patient\PatientController;
 use App\Http\Controllers\EmployeeBookingTypeController;
 use App\Http\Controllers\HomeController;
@@ -25,6 +26,8 @@ Route::group(['middleware' => 'receptionist'], function () {
     Route::get('/generate-pdf/{booking_slug}', [PatientController::class, 'downloadPdf'])->name('employee.register-bookings.download');
     Route::post('/update-payment/{register_booking_slug}', [App\Http\Controllers\HomeController::class, 'updatePayment'])->name('employee.updatePayment');
     Route::resource('/employee-booking-types', EmployeeBookingTypeController::class);
+    Route::resource('/recep-expenditure-manages', ExpenditureController::class);
+
 
 
 });

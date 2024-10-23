@@ -10,5 +10,5 @@ interface  ExpenditureInterface {
 
     public function deleteExpenditure($id);
     public function updateExpenditure($data, $id);
-    public function getSeperateExpenditureTotal($type);
+    public function getSeperateExpenditureTotal($type, $fromDate = null, $toDate = null);
 }
