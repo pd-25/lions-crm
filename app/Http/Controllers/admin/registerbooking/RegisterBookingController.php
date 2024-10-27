@@ -53,7 +53,7 @@ class RegisterBookingController extends Controller
                     'operation_scheme_id.required' => 'Operation scheme ID is required when booking type is operation.',
                 ],
             );
-            $userData = $request->only('patient_name', 'phone_number', 'address');
+            $userData = $request->only('patient_name', 'phone_number', 'address', 'existing_patient_id');
             $bookingData = $request->only('booking_type_id', 'amount', 'about_patient_problem', 'operation_scheme_id', 'initial_paid_amount');
             if ($this->bookingRegisterInterface->createBookingRegister($userData, $bookingData)) {
                 return response()->json([
@@ -95,7 +95,7 @@ class RegisterBookingController extends Controller
             if (isset($checkIfPatientExist['status']) && $checkIfPatientExist['status']) {
                 return response()->json([
                     'status' => true,
-                    $checkIfPatientExist,
+                    'patientList' =>$checkIfPatientExist,
                 ]);
             } else {
                 return response()->json([

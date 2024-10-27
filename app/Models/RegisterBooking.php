@@ -32,7 +32,7 @@ class RegisterBooking extends Model
     {
         $slug = Str::slug($name);
         $originalSlug = $slug;
-        while (User::where('slug', $slug)->exists()) {
+        while (RegisterBooking::where('slug', $slug)->exists()) {
             $slug = $originalSlug . '-' . time();
         }
 

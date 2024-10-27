@@ -8,6 +8,7 @@ use App\Models\BookingType;
 use App\Models\RegisterBooking;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use illuminate\Support\Str;
@@ -28,32 +29,52 @@ class BookingRegisterRepository implements BookingRegisterInterface
     {
         try {
             $data = [];
-            $ifBookingId = $this->bookingRegisterModel->with('patient')->where('booking_id', $givenInput)->first();
-            if (!$ifBookingId) {
-                $ifPhoneNumber = $this->userModel->with('registerBooking')->where('phone_number', $givenInput)->first();
-                if ($ifPhoneNumber) {
+
+            $bookingRecords = $this->bookingRegisterModel->with('patient')->where('booking_id', $givenInput)->get();
+
+            if ($bookingRecords->isEmpty()) {
+                $phoneRecords = $this->userModel->where('phone_number', $givenInput)->get();
+
+                if ($phoneRecords->isNotEmpty()) {
                     $data['status'] = true;
-                    $data['patient_name'] = $ifPhoneNumber->name;
-                    $data['phone_number'] = $ifPhoneNumber->phone_number;
-                    $data['address'] = $ifPhoneNumber->address;
+                    $data['patients'] = [];
+
+                    foreach ($phoneRecords as $record) {
+                        $data['patients'][] = [
+                            'patient_name' => $record->name,
+                            'phone_number' => $record->phone_number,
+                            'address' => $record->address,
+                            'user_id' => $record->id
+                        ];
+                    }
                 } else {
                     $data['status'] = false;
                     $data['msg'] = 'No data found';
                 }
-                return $data;
             } else {
                 $data['status'] = true;
-                $data['patient_name'] = $ifBookingId->patient->name;
-                $data['phone_number'] = $ifBookingId->patient->phone_number;
-                $data['address'] = $ifBookingId->patient->address;
-                return $data;
+                $data['patients'] = [];
+
+                foreach ($bookingRecords as $record) {
+                    $data['patients'][] = [
+                        'patient_name' => $record->patient->name,
+                        'phone_number' => $record->patient->phone_number,
+                        'address' => $record->patient->address,
+                        'user_id' => $record->patient->id
+
+                    ];
+                }
             }
-        } catch (\Throwable $th) {
-            $data['status'] = false;
-            $data['msg'] = $th->getMessage();
+
             return $data;
+        } catch (\Throwable $th) {
+            return [
+                'status' => false,
+                'msg' => $th->getMessage(),
+            ];
         }
     }
+
 
     public function getAllBookings($request)
     {
@@ -88,7 +109,8 @@ class BookingRegisterRepository implements BookingRegisterInterface
     {
         return $this->bookingTypeModel->where('slug', $slug)->first();
     }
-    public function addNewBookingType(array $typeData) {
+    public function addNewBookingType(array $typeData)
+    {
         $slug = Str::slug($typeData['type_name']);
         $slug_count = DB::table('booking_types')->where('slug', $slug)->count();
         if ($slug_count > 0) {
@@ -97,46 +119,50 @@ class BookingRegisterRepository implements BookingRegisterInterface
         $typeData['slug'] = $slug;
         return $this->bookingTypeModel->create($typeData);
     }
-    public function updateBookingType($data, $slug) {
-        
+    public function updateBookingType($data, $slug)
+    {
+
         return $this->bookingTypeModel->where('slug', $slug)->update($data);
     }
-    public function deletebookingType($slug){
+    public function deletebookingType($slug)
+    {
         return $this->bookingTypeModel->where('slug', $slug)->delete();
     }
 
     public function createBookingRegister(array $userData, array $bookingData)
     {
         try {
-            $bookingData['user_id'] = $this->checkUserByNumber($userData);
-            $bookingData['booking_id'] = $this->generateUniqueBookingId();
-            // dd($bookingData);
-            $createBooking = $this->bookingRegisterModel->create($bookingData);
-            if ($createBooking instanceof RegisterBooking) {
-                BookingPayment::create([
-                    "amount" => $bookingData["initial_paid_amount"],
-                    "register_booking_id" => $createBooking->id
-                ]);
-                return true;
-            }
-            return false;
+            return DB::transaction(function () use ($userData, $bookingData) {
+                $bookingData['user_id'] = $this->checkUserByExistingId($userData);
+                $bookingData['booking_id'] = $this->generateUniqueBookingId();
+
+                $createBooking = $this->bookingRegisterModel->create($bookingData);
+
+                if ($createBooking instanceof RegisterBooking) {
+                    BookingPayment::create([
+                        "amount" => $bookingData["initial_paid_amount"],
+                        "register_booking_id" => $createBooking->id
+                    ]);
+                    return true;
+                }
+                return false;
+            });
         } catch (\Throwable $th) {
             $this->getLogs($th);
             return false;
         }
     }
 
-    public function checkUserByNumber($userData)
+    public function checkUserByExistingId($userData)
     {
-        $findUser = $this->userModel->where('phone_number', $userData['phone_number'])->first();
-        if ($findUser) {
-            if ($findUser->update([
-                'name' => $userData['patient_name'],
-                'address' => $userData['address']
-            ])) {
+        if ($userData["existing_patient_id"] > 0) {
+            $findUser = $this->userModel->where('id', $userData['existing_patient_id'])->first();
+            if ($findUser) {
                 return $findUser->id;
+            } else {
+                throw new Exception("Patient not found in system", 401);
             }
-        } else {
+        } elseif ($userData["existing_patient_id"] == 0) {
             $newUser = $this->userModel->create([
                 'name' => $userData['patient_name'],
                 'address' => $userData['address'],
