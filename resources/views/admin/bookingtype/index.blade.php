@@ -24,7 +24,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                
+
                                 @foreach ($bookingtypes as $bookingtype)
                                     <tr>
                                         <th scope="row">{{ $loop->iteration }}</th>
@@ -34,18 +34,21 @@
                                         <td>
                                             <a href="{{ route('booking-types.edit', $bookingtype->slug) }}"><i
                                                     class="ri-pencil-fill"></i></a>
-                                            <form method="POST"
-                                                action="{{ route('booking-types.destroy', $bookingtype->slug) }}"
-                                                class="d-inline-block pl-2">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="delete-icon show_confirm"
-                                                    data-toggle="tooltip" title='Delete'>
+                                            @if ($bookingtype->id != 2)
+                                                <form method="POST"
+                                                    action="{{ route('booking-types.destroy', $bookingtype->slug) }}"
+                                                    class="d-inline-block pl-2">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="delete-icon show_confirm"
+                                                        data-toggle="tooltip" title='Delete'>
 
-                                                    <i class="ri-delete-bin-2-fill"></i>
+                                                        <i class="ri-delete-bin-2-fill"></i>
 
-                                                </button>
-                                            </form>
+                                                    </button>
+                                                </form>
+                                            @endif
+
                                         </td>
                                     </tr>
                                 @endforeach
