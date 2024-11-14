@@ -63,7 +63,7 @@
                                                 class="{{ getExpenditureType($expenditure->debit_or_credit) }}">{{ $expenditure->debit_or_credit }}</span>
                                         </td>
                                         <td>{{ $expenditure->note }}</td>
-                                        <td> {{ \Carbon\Carbon::parse($expenditure->created_at)->format('dM, Y h:i A') }}
+                                        <td> {{ \Carbon\Carbon::parse($expenditure->date)->format('dM, Y') }}
                                         </td>
                                         <td>
                                             <a href="{{ route('recep-expenditure-manages.edit', encrypt($expenditure->id)) }}"><i

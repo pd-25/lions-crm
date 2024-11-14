@@ -5,6 +5,7 @@ namespace App\core\bookingregister;
 use App\core\bookingregister\BookingRegisterInterface;
 use App\Models\BookingPayment;
 use App\Models\BookingType;
+use App\Models\Pescription;
 use App\Models\RegisterBooking;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -188,7 +189,7 @@ class BookingRegisterRepository implements BookingRegisterInterface
 
     public function getBookingRegister($slug)
     {
-        return $this->bookingRegisterModel->where('slug', $slug)->with('patient', 'bookingType')->firstOrFail();
+        return $this->bookingRegisterModel->where('slug', $slug)->with('patient', 'bookingType', 'pescription')->firstOrFail();
     }
 
     public function getLogs($th)
@@ -249,6 +250,27 @@ class BookingRegisterRepository implements BookingRegisterInterface
         } catch (\Throwable $th) {
             $this->getLogs($th);
             return false;
+        }
+    }
+
+    public function updatePescription($data, $pesData, $slug)
+    {
+        $checkBooking = $this->getBookingRegister($slug);
+
+        if ($checkBooking) {
+            if (!empty($pesData["clinical_findings"])) {
+                $data["clinical_findings"] = json_encode($pesData["clinical_findings"]);
+            }
+            if (!empty($pesData["advice"])) {
+                $data["advice"] = json_encode($pesData["advice"]);
+            }
+            $checkifNew = Pescription::where("register_booking_id", $checkBooking->id)->first();
+            if ($checkifNew) {
+                return $checkifNew->update($data);
+            } else {
+                $data["register_booking_id"] = $checkBooking->id;
+                return Pescription::create($data);
+            }
         }
     }
 }

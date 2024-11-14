@@ -11,4 +11,12 @@ trait AllTrait
         $data['bookingInfo'] = $this->bookingRegisterInterface->getBookingRegister($slug);
         return View::make('pdf.registerbooking-pdf', $data);
     }
+
+    public function getPescriptionPrint($slug)
+    {
+        $data['bookingInfo'] = $this->bookingRegisterInterface->getBookingRegister($slug);
+        return View::make('pdf.pescription', $data);
+    }
+
+    
 }

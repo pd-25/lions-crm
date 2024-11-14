@@ -7,11 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
+
 class RegisterBooking extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['booking_id','user_id', 'patient_name','phone_number','address','amount', 'about_patient_problem', 'booking_type_id', 'operation_scheme_id', 'initial_paid_amount'];
+    protected $fillable = ['booking_id', 'user_id', 'patient_name', 'phone_number', 'address', 'amount', 'about_patient_problem', 'booking_type_id', 'operation_scheme_id', 'initial_paid_amount'];
 
     protected static function boot()
     {
@@ -57,11 +58,9 @@ class RegisterBooking extends Model
     public function getBookingTypeOrOperationAttribute()
     {
         if ($this->booking_type_id == config('constants.operation_id') && $this->operation_scheme_id != null) {
-            return $this->operationScheme?->name.'<span class="text-danger">(Operation)</span>';
+            return $this->operationScheme?->name . '<span class="text-danger">(Operation)</span>';
         }
-        return $this->bookingType?->type_name ;
-
-       
+        return $this->bookingType?->type_name;
     }
     public function getCreatedAtAttribute($value)
     {
@@ -72,5 +71,10 @@ class RegisterBooking extends Model
     public function bookingPaymrnts()
     {
         return $this->hasMany(BookingPayment::class, 'register_booking_id', 'id');
+    }
+
+    public function pescription()
+    {
+        return $this->hasOne(Pescription::class, "register_booking_id", "id");
     }
 }

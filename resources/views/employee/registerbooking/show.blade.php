@@ -68,6 +68,7 @@
                 </div>
             </div>
         </div>
+        @include('common.pescription-form')
     </div>
 </section>
 @endsection

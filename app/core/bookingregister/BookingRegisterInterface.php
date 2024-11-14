@@ -18,5 +18,7 @@ interface BookingRegisterInterface {
     
     public function generatePdf($slug);
     public function updatePayment($dueAmount, $booking_id, $originalAmount);
+    public function updatePescription($data, $pesData, $slug);
+
     
 }

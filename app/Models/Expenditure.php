@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Expenditure extends Model
 {
     use HasFactory;
-    protected $fillable = ['ammount', 'debit_or_credit', 'note'];
+    protected $fillable = ['ammount', 'debit_or_credit', 'note', 'date'];
 }

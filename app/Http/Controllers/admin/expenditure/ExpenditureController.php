@@ -47,7 +47,8 @@ class ExpenditureController extends Controller
         $data = $request->validate([
             'ammount' => 'required|numeric',
             'debit_or_credit' => 'required|in:' . implode(',', ExpenditureTypeEnum::values()),
-            'note' => 'required|string|max:1000'
+            'note' => 'required|string|max:1000',
+            'date' => "required"
         ]);
 
         if ($this->expenditureInterface->storeExpenditure($data)) {
@@ -83,7 +84,8 @@ class ExpenditureController extends Controller
         $data = $request->validate([
             'ammount' => 'required|numeric',
             'debit_or_credit' => 'required|in:' . implode(',', ExpenditureTypeEnum::values()),
-            'note' => 'required|string|max:1000'
+            'note' => 'required|string|max:1000',
+            'date' => "required"
         ]);
 
         if ($this->expenditureInterface->updateExpenditure($data, $id)) {

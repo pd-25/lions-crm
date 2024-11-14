@@ -36,4 +36,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 Route::get('/check-patient-privious-bookings', [RegisterBookingController::class, 'checkPatientPriviousBooking'])->name('admin.checkPatientPriviousBooking');
 Route::get('/check-bookingtype-operation', [RegisterBookingController::class, 'checkIfBookingTypeOperation'])->name('admin.checkIfBookingTypeOperation');
 Route::get('/get-print/{slug}',[RegisterBookingController::class, 'getPrint'])->name("get-print");
+Route::get('/get-pescription-print/{slug}',[RegisterBookingController::class, 'getPescriptionPrint'])->name("get-pescription-print");
+
+Route::post('/save-pescription/{slug}', [RegisterBookingController::class, 'savePescription'])->name('admin.savePescription');
+
 

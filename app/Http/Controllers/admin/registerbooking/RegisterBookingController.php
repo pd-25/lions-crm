@@ -95,7 +95,7 @@ class RegisterBookingController extends Controller
             if (isset($checkIfPatientExist['status']) && $checkIfPatientExist['status']) {
                 return response()->json([
                     'status' => true,
-                    'patientList' =>$checkIfPatientExist,
+                    'patientList' => $checkIfPatientExist,
                 ]);
             } else {
                 return response()->json([
@@ -118,7 +118,7 @@ class RegisterBookingController extends Controller
         $checkBooking = $this->bookingRegisterInterface->getBookingRegister($booking_slug);
         if ($checkBooking) {
             $updatingPayment = $this->bookingRegisterInterface->updatePayment($request->input("due_amount"), $checkBooking->id, $checkBooking->amount);
-          
+
             if ($updatingPayment === 2) {
                 return response()->json([
                     "status" => false,
@@ -135,6 +135,18 @@ class RegisterBookingController extends Controller
                     "msg" => "Payment updated successfully."
                 ]);
             }
+        }
+    }
+
+    public function savePescription(Request $request, $slug)
+    {
+        $data = $request->only("venue", "age", "sex", "guardians_name", "doctor");
+        $pesData = $request->only("clinical_findings", "advice");
+        $savePes = $this->bookingRegisterInterface->updatePescription($data, $pesData, $slug);
+        if($savePes){
+            return back()->with("msg", "Pescription updated successfully");
+        }else{
+            return back()->with("msg", "Some error occur!"); 
         }
     }
 }
