@@ -48,7 +48,7 @@
                     <img src="{{ asset('pescription/images/logo-text.png') }}" style="margin-top:-30px;">
                     <p>135, Bowbazar Road, (Moti Roy Bandh), Nabadwip</p>
                     <p style="color:#000000;font-size:30px;margin-top:10px;"><strong>Donation For
-                            {{ $bookingInfo->amount }}/-</strong></p>
+                            {{ $bookingInfo?->amount }}/-</strong></p>
                 </div>
 
                 <div class="span-2 text-right">
@@ -59,26 +59,26 @@
             <div class="row" style="border:1px #000000 solid;border-radius:30px;padding:30px;color:#000000;">
                 <div class="span-12">
                     <p class="three-line"><span>OPD/ORC No<strong
-                                class="line3"style="width:600px;">{{ $bookingInfo->booking_id ?? ' ' }}</strong></span>
+                                class="line3"style="width:600px;">{{ $bookingInfo?->booking_id ?? ' ' }}</strong></span>
                         <span>Venue<strong
-                                class="line3">{{ $bookingInfo->pescription->venue }}</strong></span><span>Date<strong
+                                class="line3">{{ $bookingInfo?->pescription?->venue }}</strong></span><span>Date<strong
                                 class="line3"
-                                style="width:170px;">{{ \Carbon\Carbon::parse($bookingInfo->created_at)->format('d M, Y h:i A') }}</strong></span>
+                                style="width:170px;">{{ \Carbon\Carbon::parse($bookingInfo?->created_at)->format('d M, Y h:i A') }}</strong></span>
                     </p>
-                    <p class="single-line">Pationt's Name<strong class="full-line2">{{ $bookingInfo->patient->name }}
+                    <p class="single-line">Pationt's Name<strong class="full-line2">{{ $bookingInfo?->patient->name }}
                         </strong></p>
                     <p class="single-line">Father's/Husband Name<strong class="full-line2">
-                            {{ $bookingInfo->pescription->guardians_name ?? ' ' }}</strong></p>
+                            {{ $bookingInfo?->pescription?->guardians_name ?? ' ' }}</strong></p>
                     <p class="three-line"><span>Age<strong
-                                class="line3">{{ $bookingInfo->pescription?->age ?? '' }}</strong></span>
+                                class="line3">{{ $bookingInfo?->pescription?->age ?? '' }}</strong></span>
                         <span>Sex<strong
-                                class="line3">{{ $bookingInfo->pescription?->sex ?? '' }}</strong></span><span>Doctor/Optometrist<strong
+                                class="line3">{{ $bookingInfo?->pescription?->sex ?? '' }}</strong></span><span>Doctor/Optometrist<strong
                                 class="line3"
-                                style="width:538px;">{{ $bookingInfo->pescription->doctor }}</strong></span>
+                                style="width:538px;">{{ $bookingInfo?->pescription?->doctor }}</strong></span>
                     </p>
                     <p class="two-line"><span>Address<strong class="line3"
-                                style="width:854px;">{{ $bookingInfo->patient->address ?? ' ' }}</strong></span>
-                        <span>Mobile<strong class="line3">{{ $bookingInfo->patient->phone_number }}</strong></span>
+                                style="width:854px;">{{ $bookingInfo?->patient->address ?? ' ' }}</strong></span>
+                        <span>Mobile<strong class="line3">{{ $bookingInfo?->patient->phone_number }}</strong></span>
                     </p>
                 </div>
             </div>
@@ -88,8 +88,8 @@
                         <p>Clinical Findings</p>
                     </div>
                     <div style="text-align:center;">
-                        @if (!empty($bookingInfo->pescription?->clinical_findings))
-                            @foreach (json_decode($bookingInfo->pescription->clinical_findings) as $finding)
+                        @if (!empty($bookingInfo?->pescription?->clinical_findings))
+                            @foreach (json_decode($bookingInfo?->pescription?->clinical_findings) as $finding)
                                 <p>{{ $finding }}
                                 </p>
                             @endforeach
@@ -108,8 +108,8 @@
                         <p>Advice</p>
                     </div>
                     <div style="text-align:center;">
-                        @if (!empty($bookingInfo->pescription?->advice))
-                            @foreach (json_decode($bookingInfo->pescription->advice) as $advice)
+                        @if (!empty($bookingInfo?->pescription?->advice))
+                            @foreach (json_decode($bookingInfo?->pescription?->advice) as $advice)
                                 <p>{{ $advice }}</p>
                             @endforeach
                         @endif
