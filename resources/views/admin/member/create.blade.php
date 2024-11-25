@@ -12,6 +12,18 @@
                         <form action="{{ route('members.store') }}" method="POST" enctype="multipart/form-data">
                             @method('POST')
                             @csrf
+
+                            <div class="row mb-3">
+                                <label for="inputText" class="col-sm-2 col-form-label">Is Stuff</label>
+                                <div class="col-sm-10">
+                                    <input type="checkbox" name="type">
+                                    @error('type')
+                                        <span class="text-danger" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
                            
                             <div class="row mb-3">
                                 <label for="inputText" class="col-sm-2 col-form-label">Full Name</label>

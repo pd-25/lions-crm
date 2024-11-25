@@ -52,7 +52,7 @@
         <li class="nav-item {{ Route::is('recep-expenditure-manages.index') ? 'active' : ''}}">
             <a class="nav-link " href="{{route('recep-expenditure-manages.index')}}">
                 <i class="ri-group-fill"></i>
-                <span>Expenditure Mgmt</span>
+                <span>Receive/Payment</span>
             </a>
         </li>
         

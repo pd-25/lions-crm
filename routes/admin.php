@@ -40,4 +40,6 @@ Route::get('/get-pescription-print/{slug}',[RegisterBookingController::class, 'g
 
 Route::post('/save-pescription/{slug}', [RegisterBookingController::class, 'savePescription'])->name('admin.savePescription');
 
+Route::get('/expenditure-export', [ExpenditureController::class, 'export'])->name('expenditure.download');
+
 

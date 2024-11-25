@@ -54,7 +54,7 @@
                                         @csrf
                                         <div class="form-group">
                                             <label>Email *</label>
-                                            <input name="email" type="email" class="form-control p_input">
+                                            <input name="email" type="email" class="form-control p_input" autocomplete="email" autofocus>
                                             @error('email')
                                                 <span class="text-danger" role="alert">
                                                     <strong>{{ $message }}</strong>

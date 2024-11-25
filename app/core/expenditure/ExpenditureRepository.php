@@ -4,6 +4,7 @@ namespace App\core\expenditure;
 
 use App\Models\Expenditure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ExpenditureRepository implements ExpenditureInterface
 {
@@ -22,26 +23,26 @@ class ExpenditureRepository implements ExpenditureInterface
     // }
     public function getAllExpenditures(Request $request)
     {
+
         $query = Expenditure::query()->orderByDesc('id');
 
-        // Apply date filters if provided
-        if ($request->has('from_date') && $request->has('to_date')) {
+        if ($request->from_date && $request->to_date) {
             $fromDate = $request->input('from_date');
             $toDate = $request->input('to_date');
-            
-            // Debugging dates
-            \Log::info('Filtering expenditures from ' . $fromDate . ' to ' . $toDate);
-            
-            // Ensure dates are in correct format
+            Log::info('Filtering expenditures from ' . $fromDate . ' to ' . $toDate);
             try {
                 $fromDate = \Carbon\Carbon::parse($fromDate)->startOfDay();
                 $toDate = \Carbon\Carbon::parse($toDate)->endOfDay();
             } catch (\Exception $e) {
-                \Log::error('Invalid date format: ' . $e->getMessage());
+                Log::error('Invalid date format: ' . $e->getMessage());
             }
 
-            $query->whereBetween('created_at', [$fromDate, $toDate]);
+            $query->whereBetween('date', [$fromDate, $toDate]);
         }
+        if ($request->donation_type) {
+            $query->Where('donation_type', $request->donation_type);
+        }
+
 
         return $query;
     }
@@ -75,12 +76,12 @@ class ExpenditureRepository implements ExpenditureInterface
     {
         $findExpenditure = Expenditure::findOrFail($id);
         if ($findExpenditure) {
-           return $findExpenditure->delete();
+            return $findExpenditure->delete();
         } else {
             return false;
         }
     }
-    
+
     // public function getSeperateExpenditureTotal($type, $fromDate = null, $toDate = null)
     // {
     //     $query = Expenditure::where('debit_or_credit', $type);
@@ -103,5 +104,4 @@ class ExpenditureRepository implements ExpenditureInterface
 
         return $query->sum('ammount');
     }
-    
 }

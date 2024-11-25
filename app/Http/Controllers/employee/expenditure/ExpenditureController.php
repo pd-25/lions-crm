@@ -3,16 +3,20 @@
 namespace App\Http\Controllers\employee\expenditure;
 
 use App\core\expenditure\ExpenditureInterface;
+use App\core\member\MemberInterface;
+use App\enum\ExpenditureCategoryEnum;
+use App\enum\ExpenditurePaymentModeEnum;
 use App\enum\ExpenditureTypeEnum;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class ExpenditureController extends Controller
 {
-    public $expenditureInterface;
-    public function __construct(ExpenditureInterface $expenditureInterface)
+    public $expenditureInterface, $memberInterface;
+    public function __construct(ExpenditureInterface $expenditureInterface, MemberInterface $memberInterface)
     {
         $this->expenditureInterface = $expenditureInterface;
+        $this->memberInterface = $memberInterface;
     }
     /**
      * Display a listing of the resource.
@@ -21,7 +25,7 @@ class ExpenditureController extends Controller
     {
         $fromDate = $request->input('from_date');
         $toDate = $request->input('to_date');
-    
+
         return view('employee.expenditure.index', [
             'expenditures' => $this->expenditureInterface->getAllExpenditures($request)->paginate(20),
             'totalCredit' => $this->expenditureInterface->getSeperateExpenditureTotal(ExpenditureTypeEnum::CREDIT, $fromDate, $toDate),
@@ -36,8 +40,10 @@ class ExpenditureController extends Controller
      */
     public function create()
     {
-        return view('employee.expenditure.create');
-
+        return view('employee.expenditure.create', [
+            'stuffs' => $this->memberInterface->getAllMembers('stuffs'),
+            'members' => $this->memberInterface->getAllMembers('members')
+        ]);
     }
 
     /**
@@ -46,14 +52,29 @@ class ExpenditureController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
+            'donation_type' => 'required|in:' . implode(',', ExpenditureCategoryEnum::values()),
             'ammount' => 'required|numeric',
             'debit_or_credit' => 'required|in:' . implode(',', ExpenditureTypeEnum::values()),
             'note' => 'required|string|max:1000',
-            'date' => "required"
+            'date' => "required|date",
+            'unique_personal_doc_name' => $request?->donation_type == 'Donation' ? 'required|string' : 'nullable',
+            'unique_personal_doc_id' => $request?->donation_type == 'Donation' ? 'required|string' : 'nullable',
+            'id_code' => $request?->donation_type == 'Donation' ? 'required|string' : 'nullable',
+            'section_code' => $request?->donation_type == 'Donation' ? 'required|string' : 'nullable',
+            'payment_mode' => $request?->donation_type == 'Donation' ? 'required|in:' . implode(',', ExpenditurePaymentModeEnum::values()) : 'nullable',
+            'name_of_donor' => $request?->donation_type == 'Donation' ? 'required|string' : 'nullable',
+            'address_of_donor' => $request?->donation_type == 'Donation' ? 'required|string' : 'nullable',
+            'member_id' => ($request?->donation_type == 'Salary' || $request?->donation_type == 'Member Payment') ? 'required|exists:members,id' : 'nullable',
+
         ]);
+        dd($data);
 
         if ($this->expenditureInterface->storeExpenditure($data)) {
-            return redirect()->route('recep-expenditure-manages.index')->with('msg', 'Expenditure Added Successfully..');
+            return response()->json([
+                "status" => "success",
+                "toUrl" => route('recep-expenditure-manages.index'),
+                "msg" => $request?->donation_type . " Added Successfully..!"
+            ]);
         } else {
             return back()->with('msg', 'Some error occur..');
         }

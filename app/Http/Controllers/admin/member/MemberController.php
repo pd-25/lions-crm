@@ -38,7 +38,7 @@ class MemberController extends Controller
             'phone' => 'required|string'
         ]);
 
-        $insertMember = $this->memberInterface->addNewMember($request->only('name', 'email', 'phone', 'join_date', 'image'));
+        $insertMember = $this->memberInterface->addNewMember($request->only('name', 'email', 'phone', 'join_date', 'image', 'type'));
         if($insertMember) {
             return redirect()->route('members.index')->with('msg', 'Member Added Successfully..');
         }else{

@@ -8,21 +8,13 @@
                 <div class="card">
                     <div class="card-body">
 
-                        <h5 class="card-title">All Expenditures</h5>
+                        <h5 class="card-title">All Receive/Payment</h5>
                         
                         <form method="GET" action="{{ route('recep-expenditure-manages.index') }}">
-                            <div class="row mb-3">
-                                <div class="col-sm-4">
-                                    <input type="date" name="from_date" class="form-control" value="{{ request('from_date', $fromDate) }}">
-                                </div>
-                                <div class="col-sm-4">
-                                    <input type="date" name="to_date" class="form-control" value="{{ request('to_date', $toDate) }}">
-                                </div>
-                                <div class="col-sm-4">
-                                    <button type="submit" class="btn btn-primary btn-sm">Filter</button>
-                                    <a href="{{ route('recep-expenditure-manages.index') }}" type="submit"
-                                    class="btn btn-sm btn-danger">Clear</a>
-                                </div>
+                            @include('common.expenditure-filter')
+                            <div class="col-sm-4">
+                                <button type="submit" class="btn btn-primary btn-sm">Filter</button>
+                                <a href="{{ route('recep-expenditure-manages.index') }}" type="submit" class="btn btn-sm btn-danger">Clear</a>
                             </div>
                         </form>
                         <div class="row">
@@ -43,6 +35,7 @@
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
+                                    <th scope="col">Category</th>
                                     <th scope="col">Ammount</th>
                                     <th scope="col">Type</th>
                                     <th scope="col">Note</th>
@@ -57,6 +50,7 @@
                                 @foreach ($expenditures as $expenditure)
                                     <tr>
                                         <th scope="row">{{ $startIndex++ }}</th>
+                                        <td class="{{getExpenditureCategory($expenditure->donation_type)}} mt-1">{{ $expenditure->donation_type ?? 'N/A' }}</td>
                                         <td>{{ $expenditure->ammount }}</td>
 
                                         <td><span
