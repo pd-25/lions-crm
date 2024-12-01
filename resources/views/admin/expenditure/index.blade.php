@@ -49,7 +49,7 @@
                                     <th scope="col">Type</th>
                                     <th scope="col">Note</th>
                                     <th scope="col">Date</th>
-                                    <th scope="col">Done By</th>
+                                    <th scope="col">Added By</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
