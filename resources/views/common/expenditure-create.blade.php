@@ -289,9 +289,9 @@
             }
 
             // Function to generate HTML for Donation type
-            function generateDonationForm() {
+            function generateDonationForm(category) {
                 return `
-            <h2><u>Please enter the donation details.</u></h2>
+            <h2><u>Please enter the ${category} details.</u></h2>
             
             
 
@@ -405,7 +405,12 @@
 
                 switch (selectedType) {
                     case 'Donation':
-                        donationForm.innerHTML = generateDonationForm();
+                    case 'District Grand':
+                    case 'Blood Donation Camp':
+                    case 'Fixed Deposit Interest':
+                    case 'Interest in Bank':
+                    case 'Other Contribution':
+                        donationForm.innerHTML = generateDonationForm(selectedType);
                         break;
                     case 'Salary':
                         salaryForm.innerHTML = generateSalaryForm();
@@ -421,7 +426,7 @@
             // Handle the form submission with fetch
             function handleFormSubmission() {
                 const form = document.querySelector('#expenditureForm');
-                const formData = new FormData(document.querySelector('form'));
+                const formData = new FormData(form);
                 submitBtn.innerHTML =
                     '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...';
                 submitBtn.disabled = true;

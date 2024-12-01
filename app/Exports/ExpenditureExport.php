@@ -36,6 +36,7 @@ class ExpenditureExport implements FromCollection, WithHeadings
                 $expenditure->address_of_donor ?? 'N/A',
                 $expenditure->payment_mode ?? 'N/A',
                 $expenditure?->member?->name  ?? 'N/A',
+                $expenditure?->checkAction?->name  ?? 'N/A',
 
 
             ];
@@ -59,6 +60,7 @@ class ExpenditureExport implements FromCollection, WithHeadings
             'Address of Donor',
             'Payment Mode',
             'Member/Stuff',
+            'Done By',
         ];
     }
 }

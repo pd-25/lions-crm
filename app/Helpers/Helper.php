@@ -27,7 +27,15 @@ if (!function_exists('getExpenditureType')) {
 if (!function_exists('getExpenditureCategory')) {
     function getExpenditureCategory($expenditureCategory)
     {
-        if($expenditureCategory == ExpenditureCategoryEnum::DONATION){
+        $donationCategories = [
+            ExpenditureCategoryEnum::DONATION,
+            ExpenditureCategoryEnum::DISTRICT_GRAND,
+            ExpenditureCategoryEnum::BLOOD_CONATION_CAMP,
+            ExpenditureCategoryEnum::FIXED_DIPOSIT_INTEREST,
+            ExpenditureCategoryEnum::INTEREST_IN_BANK,
+            ExpenditureCategoryEnum::OTHER_CONTRIBUTION
+        ];
+        if(in_array($expenditureCategory, $donationCategories)){
             return 'badge bg-info text-dark';
         }
         if($expenditureCategory == ExpenditureCategoryEnum::SALARY){

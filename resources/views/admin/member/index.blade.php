@@ -34,7 +34,9 @@
                                 @foreach ($members as $member)
                                     <tr>
                                         <th scope="row">{{ $startIndex++ }}</th>
-                                        <td>{{ $member->name }}</td>
+                                        <td>{{ $member->name }} <span
+                                                class="{{ $member->type == 1 ? 'text-primary' : 'text-success' }}"><strong>({{ $member->type == 1 ? 'Stuff' : 'Member' }})</strong></span>
+                                        </td>
                                         <td> <img src="{{ getImage($member->image, 'MemberImage') }}" alt=""
                                                 height="50px" width="50px"></td>
                                         <td>{{ $member->phone }}</td>

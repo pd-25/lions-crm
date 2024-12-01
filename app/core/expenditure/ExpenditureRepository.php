@@ -4,6 +4,7 @@ namespace App\core\expenditure;
 
 use App\Models\Expenditure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class ExpenditureRepository implements ExpenditureInterface
@@ -49,6 +50,15 @@ class ExpenditureRepository implements ExpenditureInterface
 
     public function storeExpenditure(array $data)
     {
+        if (Auth::guard('admin')->check()) {
+            $data['done_by_user_or_admin'] = 'admin';
+            $data['receptionist_id'] = auth()->guard('admin')->id();
+        } elseif (Auth::check()) {
+            $data['done_by_user_or_admin'] = 'user';
+            $data['receptionist_id'] = auth()->id();
+        }
+
+        // $data['receptionist_id'] = 
         $store = Expenditure::create($data);
         if ($store instanceof Expenditure) {
             return true;

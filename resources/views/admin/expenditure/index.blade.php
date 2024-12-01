@@ -49,6 +49,7 @@
                                     <th scope="col">Type</th>
                                     <th scope="col">Note</th>
                                     <th scope="col">Date</th>
+                                    <th scope="col">Done By</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
@@ -68,8 +69,9 @@
                                                 class="{{ getExpenditureType($expenditure->debit_or_credit) }}">{{ $expenditure->debit_or_credit }}</span>
                                         </td>
                                         <td>{{ $expenditure->note }}</td>
-                                        <td> {{ \Carbon\Carbon::parse($expenditure->date)->format('dM, Y h:i A') }}
+                                        <td> {{ \Carbon\Carbon::parse($expenditure->date)->format('dM, Y') }}
                                         </td>
+                                        <td>{{ $expenditure?->checkAction?->name }}</td>
                                         <td>
                                             <a href="{{ route('expenditure-manages.edit', encrypt($expenditure->id)) }}"><i
                                                     class="ri-pencil-fill"></i></a>

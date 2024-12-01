@@ -40,7 +40,8 @@
                                     <th scope="col">Type</th>
                                     <th scope="col">Note</th>
                                     <th scope="col">Date</th>
-                                    <th scope="col">Action</th>
+                                    <th scope="col">Done By</th>
+                                    {{-- <th scope="col">Action</th> --}}
                                 </tr>
                             </thead>
                             <tbody>
@@ -59,7 +60,8 @@
                                         <td>{{ $expenditure->note }}</td>
                                         <td> {{ \Carbon\Carbon::parse($expenditure->date)->format('dM, Y') }}
                                         </td>
-                                        <td>
+                                        <td>{{ $expenditure?->checkAction?->name }}</td>
+                                        {{-- <td>
                                             <a href="{{ route('recep-expenditure-manages.edit', encrypt($expenditure->id)) }}"><i
                                                     class="ri-pencil-fill"></i></a>
                                             <form method="POST"
@@ -74,7 +76,7 @@
 
                                                 </button>
                                             </form>
-                                        </td>
+                                        </td> --}}
                                     </tr>
                                 @endforeach
 

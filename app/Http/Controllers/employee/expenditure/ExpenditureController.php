@@ -67,7 +67,6 @@ class ExpenditureController extends Controller
             'member_id' => ($request?->donation_type == 'Salary' || $request?->donation_type == 'Member Payment') ? 'required|exists:members,id' : 'nullable',
 
         ]);
-        dd($data);
 
         if ($this->expenditureInterface->storeExpenditure($data)) {
             return response()->json([
