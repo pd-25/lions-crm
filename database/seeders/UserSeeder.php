@@ -32,7 +32,7 @@ class UserSeeder extends Seeder
         DB::table("users")->insert([
             [
                 'name' => 'Frontoffice',
-                'slug' => 'lion2-receptionist',
+                'slug' => 'Frontoffice-receptionist',
                 'email' => 'Frontoffice@lionsclub.com',
                 'phone_number' => 9382930382,
                 'address' => 'Nawadip, lions point',
@@ -41,7 +41,7 @@ class UserSeeder extends Seeder
             ],
             [
                 'name' => 'Nandi',
-                'slug' => 'lion3-receptionist',
+                'slug' => 'Nandi-receptionist',
                 'email' => 'Nandi@lionsclub.com',
                 'phone_number' => 9382930382,
                 'address' => 'Nawadip, lions point',
@@ -50,7 +50,7 @@ class UserSeeder extends Seeder
             ],
             [
                 'name' => 'Puja',
-                'slug' => 'lion4-receptionist',
+                'slug' => 'Puja-receptionist',
                 'email' => 'Puja@lionsclub.com',
                 'phone_number' => 9382930382,
                 'address' => 'Nawadip, lions point',
