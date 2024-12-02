@@ -14,6 +14,7 @@ class AdminSeeder extends Seeder
      */
     public function run(): void
     {
+        Admin::truncate();
         Admin::create([
             // "name" => "Admin Lions Club",
             // "email" => "admin@mail.com",
@@ -21,10 +22,12 @@ class AdminSeeder extends Seeder
             // "slug" => "admin1-lions-club",
 
             "name" => "Admin Lions Club",
-            "email" => "adminpuja@lionsclub.com",
-            "password" => Hash::make("Adminpuja@12345"),
+            "email" => "Admin@lionsclub.com",
+            "password" => Hash::make("AdminL#club1"),
             "slug" => "admin2-lions-club",
       
         ]);
+
+
     }
 }

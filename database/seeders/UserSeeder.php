@@ -27,44 +27,34 @@ class UserSeeder extends Seeder
         //     $data->password = Hash::make('12345678');
         //     $data->save();
         // }
-
-        //Receptionist user
-        // User::create([
-        //     'name' => 'Lion Receptionist',
-        //     'slug' => 'lion-receptionist',
-        //     'email' => 'recep@mail.com',
-        //     'phone_number' => 9382930382,
-        //     'address' => 'Nawadip, lions point',
-        //     'password' => Hash::make('12345678'),
-        //     'role' => 1
-        // ]);
+        User::truncate();
 
         DB::table("users")->insert([
             [
-                'name' => 'Employee One',
+                'name' => 'Frontoffice',
                 'slug' => 'lion2-receptionist',
-                'email' => 'employee1@lionsclub.com',
+                'email' => 'Frontoffice@lionsclub.com',
                 'phone_number' => 9382930382,
                 'address' => 'Nawadip, lions point',
-                'password' => Hash::make('Employeeone@12345'),
+                'password' => Hash::make('Front#321'),
                 'role' => 1
             ],
             [
-                'name' => 'Employee Two',
+                'name' => 'Nandi',
                 'slug' => 'lion3-receptionist',
-                'email' => 'employee2@lionsclub.com',
+                'email' => 'Nandi@lionsclub.com',
                 'phone_number' => 9382930382,
                 'address' => 'Nawadip, lions point',
                 'password' => Hash::make('Employeetwo@12345'),
                 'role' => 1
             ],
             [
-                'name' => 'Employee Three',
+                'name' => 'Puja',
                 'slug' => 'lion4-receptionist',
-                'email' => 'employee3@lionsclub.com',
+                'email' => 'Puja@lionsclub.com',
                 'phone_number' => 9382930382,
                 'address' => 'Nawadip, lions point',
-                'password' => Hash::make('Employeethree@12345'),
+                'password' => Hash::make('Puja#lion21'),
                 'role' => 1
             ]
         ]);
