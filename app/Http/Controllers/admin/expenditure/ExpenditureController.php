@@ -62,6 +62,14 @@ class ExpenditureController extends Controller
         // ]);
         $data = $request->validate([
             'donation_type' => 'required|in:' . implode(',', ExpenditureCategoryEnum::values()),
+            'donation_sub_type' => function ($attribute, $value, $fail) use ($request) {
+                $donationType = $request->donation_type;
+                $debitOrCredit = $request->debit_or_credit;
+                $validSubTypes = ExpenditureCategoryEnum::categoriesByType()[$debitOrCredit][$donationType] ?? [];
+                if (!in_array($value, $validSubTypes)) {
+                    $fail("The selected sub-category is invalid for the {$debitOrCredit} type and {$donationType} category.");
+                }
+            },
             'ammount' => 'required|numeric',
             'debit_or_credit' => 'required|in:' . implode(',', ExpenditureTypeEnum::values()),
             'note' => 'required|string|max:1000',
@@ -73,7 +81,7 @@ class ExpenditureController extends Controller
             'payment_mode' => $request?->donation_type == 'Donation' ? 'required|in:' . implode(',', ExpenditurePaymentModeEnum::values()) : 'nullable',
             'name_of_donor' => $request?->donation_type == 'Donation' ? 'required|string' : 'nullable',
             'address_of_donor' => $request?->donation_type == 'Donation' ? 'required|string' : 'nullable',
-            'member_id' => ($request?->donation_type == 'Salary' || $request?->donation_type == 'Member Payment') ? 'required|exists:members,id' : 'nullable',
+            'member_id' => ($request?->donation_sub_type == 'Salary' || $request?->donation_sub_type == 'New Member Subscription' || $request?->donation_sub_type == 'Old Member Subscription') ? 'required|exists:members,id' : 'nullable',
 
         ]);
 

@@ -28,20 +28,24 @@ if (!function_exists('getExpenditureCategory')) {
     function getExpenditureCategory($expenditureCategory)
     {
         $donationCategories = [
-            ExpenditureCategoryEnum::DONATION,
-            ExpenditureCategoryEnum::DISTRICT_GRAND,
-            ExpenditureCategoryEnum::BLOOD_CONATION_CAMP,
-            ExpenditureCategoryEnum::FIXED_DIPOSIT_INTEREST,
-            ExpenditureCategoryEnum::INTEREST_IN_BANK,
-            ExpenditureCategoryEnum::OTHER_CONTRIBUTION
+            // ExpenditureCategoryEnum::DONATION,
+            // ExpenditureCategoryEnum::DISTRICT_GRAND,
+            // ExpenditureCategoryEnum::BLOOD_CONATION_CAMP,
+            // ExpenditureCategoryEnum::FIXED_DIPOSIT_INTEREST,
+            // ExpenditureCategoryEnum::INTEREST_IN_BANK,
+            // ExpenditureCategoryEnum::OTHER_CONTRIBUTION
+            ExpenditureCategoryEnum::SERVICE,
+            ExpenditureCategoryEnum::ADMINISTRATIVE,
+            ExpenditureCategoryEnum::WELFARE,
+            
         ];
         if(in_array($expenditureCategory, $donationCategories)){
             return 'badge bg-info text-dark';
         }
-        if($expenditureCategory == ExpenditureCategoryEnum::SALARY){
+        if($expenditureCategory == ExpenditureCategoryEnum::SERVICE){
             return 'badge bg-secondary';
         }
-        if($expenditureCategory == ExpenditureCategoryEnum::MEMBER_PAYMENT){
+        if($expenditureCategory == ExpenditureCategoryEnum::ADMINISTRATIVE){
             return 'badge bg-warning text-dark';
         }
         return 'badge bg-danger';

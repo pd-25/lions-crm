@@ -24,6 +24,7 @@ class ExpenditureExport implements FromCollection, WithHeadings
             return [
                 $expenditure->id,
                 $expenditure->donation_type ?? 'N/A',
+                $expenditure->donation_sub_type ?? 'N/A',
                 $expenditure->ammount,
                 $expenditure->note ?? 'N/A',
                 $expenditure->debit_or_credit,
@@ -48,6 +49,7 @@ class ExpenditureExport implements FromCollection, WithHeadings
         return [
             'SL',
             'Category',
+            'Sub Category',
             'Amount',
             'Note',
             'Type',

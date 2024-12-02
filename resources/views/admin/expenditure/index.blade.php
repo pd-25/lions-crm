@@ -45,6 +45,7 @@
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Category</th>
+                                    <th scope="col">Sub Category</th>
                                     <th scope="col">Ammount</th>
                                     <th scope="col">Type</th>
                                     <th scope="col">Note</th>
@@ -62,6 +63,7 @@
                                         <th scope="row">{{ $startIndex++ }}</th>
                                         <td class="{{ getExpenditureCategory($expenditure->donation_type) }} mt-1">
                                             {{ $expenditure->donation_type ?? 'N/A' }}</td>
+                                        <td class="mt-1"> {{ $expenditure->donation_sub_type ?? 'N/A' }}</td>
                                         <td>{{ $expenditure->ammount }}</td>
 
 

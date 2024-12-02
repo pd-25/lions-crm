@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Expenditure extends Model
 {
     use HasFactory;
-    protected $fillable = ['ammount', 'debit_or_credit', 'note', 'date', 'unique_personal_doc_name', 'unique_personal_doc_id', 'id_code', 'section_code', 'name_of_donor', 'address_of_donor', 'donation_type', 'payment_mode', 'member_id', 'receptionist_id', 'done_by_user_or_admin'];
+    protected $fillable = ['ammount', 'debit_or_credit', 'note', 'date', 'unique_personal_doc_name', 'unique_personal_doc_id', 'id_code', 'section_code', 'name_of_donor', 'address_of_donor', 'donation_type', 'payment_mode', 'member_id', 'receptionist_id', 'done_by_user_or_admin', 'donation_sub_type'];
 
     public function member(): BelongsTo
     {
