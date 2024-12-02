@@ -27,7 +27,7 @@ class UserSeeder extends Seeder
         //     $data->password = Hash::make('12345678');
         //     $data->save();
         // }
-        User::truncate();
+        // User::truncate();
 
         DB::table("users")->insert([
             [
