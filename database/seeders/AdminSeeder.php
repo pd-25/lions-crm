@@ -16,15 +16,15 @@ class AdminSeeder extends Seeder
     {
         Admin::truncate();
         Admin::create([
-            // "name" => "Admin Lions Club",
-            // "email" => "admin@mail.com",
-            // "password" => Hash::make("12345"),
-            // "slug" => "admin1-lions-club",
-
             "name" => "Admin Lions Club",
-            "email" => "Admin@lionsclub.com",
-            "password" => Hash::make("AdminL#club1"),
-            "slug" => "admin2-lions-club",
+            "email" => "admin@mail.com",
+            "password" => Hash::make("12345"),
+            "slug" => "admin1-lions-club",
+
+            // "name" => "Admin Lions Club",
+            // "email" => "Admin@lionsclub.com",
+            // "password" => Hash::make("AdminL#club1"),
+            // "slug" => "admin2-lions-club",
       
         ]);
 

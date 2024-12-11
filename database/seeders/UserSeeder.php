@@ -56,6 +56,15 @@ class UserSeeder extends Seeder
                 'address' => 'Nawadip, lions point',
                 'password' => Hash::make('Puja#lion21'),
                 'role' => 1
+            ],
+            [
+                'name' => 'Rwcep',
+                'slug' => 'recep-receptionist',
+                'email' => 'recep@mail.com',
+                'phone_number' => 9382930382,
+                'address' => 'Nawadip, lions point',
+                'password' => Hash::make('12345678'),
+                'role' => 1
             ]
         ]);
     }

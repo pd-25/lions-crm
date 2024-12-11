@@ -16,7 +16,7 @@
                     <div class="col-md-6">
                         <label for=""><b>Venue</b></label><span class="text-danger">*</span>
                         <input type="text" placeholder="Enter venue"
-                            value="{{ $registerBooking->pescription?->venue ?? '' }}" name="venue"
+                            value="{{ $registerBooking->pescription?->venue ?? 'Lions Club of Nabadwip' }}" name="venue"
                             class="form-control" required>
                     </div>
 
@@ -95,7 +95,7 @@
                                 @foreach (json_decode($registerBooking->pescription->clinical_findings) as $finding)
                                     <div class="clinical-finding-input d-flex align-items-center mt-2">
                                         <input type="text" placeholder="write here" name="clinical_findings[]"
-                                            class="form-control" value="{{ $finding }}" required>
+                                            class="form-control" value="{{ $finding }}" >
                                         <button type="button"
                                             class="btn btn-danger btn-sm ms-2 remove-button">Remove</button>
                                     </div>
@@ -103,7 +103,7 @@
                             @else
                                 <div class="clinical-finding-input d-flex align-items-center">
                                     <input type="text" placeholder="write here" name="clinical_findings[]"
-                                        class="form-control" required>
+                                        class="form-control" >
                                 </div>
                             @endif
                         </div>
@@ -113,11 +113,19 @@
                     <div class="col-md-6">
                         <label for=""><b>Advice</b></label><span class="text-danger">*</span>
                         <div id="advices-wrapper">
+                            <div class="advice-input d-flex align-items-center mt-2">
+                                <span>B/S(P.P/Fasting/R) -</span><br>
+                                <span>B/P -</span><br>
+                                <span>Tonometry -</span><br>
+                                <span>SAC Test -</span><br>
+                                <span>ECG -</span><br>
+                                    </div>
+                            {{-- this below comwnted code is functioal or dynamic advie, just uncomment it work --}}
                             @if (!empty($registerBooking->pescription?->advice))
                                 @foreach (json_decode($registerBooking->pescription->advice) as $advice)
                                     <div class="advice-input d-flex align-items-center mt-2">
                                         <input type="text" placeholder="write here" name="advice[]"
-                                            class="form-control" value="{{ $advice }}" required>
+                                            class="form-control" value="{{ $advice }}" >
                                         <button type="button"
                                             class="btn btn-danger btn-sm ms-2 remove-button-advice">Remove</button>
                                     </div>
@@ -125,7 +133,7 @@
                             @else
                                 <div class="advice-input d-flex align-items-center">
                                     <input type="text" placeholder="write here" name="advice[]"
-                                        class="form-control" required>
+                                        class="form-control" >
                                 </div>
                             @endif
                         </div>

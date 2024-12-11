@@ -13,23 +13,38 @@
         href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
         rel="stylesheet">
     <link href="{{ asset('pescription/css/style.css') }}" rel="stylesheet">
-    {{-- <style>
-        @media print {
-            @page {
-                size: A4;
-                margin: 1in;
-            }
-
-            body {
-                font-size: 12pt;
-                color: black;
-            }
-
-            .no-print {
-                display: none;
-            }
+ <style>
+    @media print {
+        @page {
+            size: A4 landscape;
+            margin: 0.5in;
         }
-    </style> --}}
+
+        body {
+            font-size: 10pt;
+            color: black;
+            margin: 0;
+        }
+
+        /* .container {
+            padding: 20px;
+        }
+
+       
+
+        .span-8, .span-6, .span-12 {
+            flex: 1;
+            min-width: 30%;
+        }
+
+        .logog{
+            flex: 1;
+            min-width: 50%;
+        } */
+
+    
+    }
+ </style>
 </head>
 
 <body>
@@ -37,7 +52,7 @@
     <section class="color-black">
         <div class="bg-white container" style="solid;color:#1356a7;padding:5px;">
             <div class="row" style="margin-bottom:30px;">
-                <div class="span-2">
+                <div class="span-2 logog">
                     <img src="{{ asset('pescription/images/logo.png') }}">
                 </div>
 
@@ -108,6 +123,11 @@
                         <p>Advice</p>
                     </div>
                     <div style="text-align:center;">
+                        <span>B/S(P.P/Fasting/R) -</span><br>
+                        <span>B/P -</span><br>
+                        <span>Tonometry -</span><br>
+                        <span>SAC Test -</span><br>
+                        <span>ECG -</span><br>
                         @if (!empty($bookingInfo?->pescription?->advice))
                             @foreach (json_decode($bookingInfo?->pescription?->advice) as $advice)
                                 <p>{{ $advice }}</p>
