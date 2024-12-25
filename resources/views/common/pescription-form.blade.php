@@ -54,7 +54,7 @@
                     <div class="col-md-6">
                         <label for=""><b>Father's/Husband Name</b></label><span class="text-danger">*</span>
                         <input type="text" placeholder="Enter Father's/Husband Name"
-                            value="{{ $registerBooking->pescription?->guardians_name ?? '' }}" name="guardians_name"
+                            value="{{ $registerBooking->pescription?->guardians_name ?? 'N/A' }}" name="guardians_name"
                             class="form-control" required>
                     </div>
 
