@@ -12,11 +12,11 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
         rel="stylesheet">
-    <link href="{{ asset('pescription/css/style.css') }}" rel="stylesheet">
- <style>
-    @media print {
+    <link href="{{asset('pescription/css/style.css')}}" rel="stylesheet">
+    <style>
+        @media print {
         @page {
-            size: A4 landscape;
+            size: A4 portrait;
             margin: 0.5in;
         }
 
@@ -26,25 +26,11 @@
             margin: 0;
         }
 
-        /* .container {
-            padding: 20px;
-        }
-
-       
-
-        .span-8, .span-6, .span-12 {
-            flex: 1;
-            min-width: 30%;
-        }
-
-        .logog{
-            flex: 1;
-            min-width: 50%;
-        } */
+   
 
     
     }
- </style>
+    </style>
 </head>
 
 <body>
@@ -52,18 +38,17 @@
     <section class="color-black">
         <div class="bg-white container" style="solid;color:#1356a7;padding:5px;">
             <div class="row" style="margin-bottom:30px;">
-                <div class="span-2 logog">
-                    <img src="{{ asset('pescription/images/logo.png') }}">
+                <div class="span-2">
+                    <img src="{{asset('pescription/images/logo.png')}}" style="width:150px;">
                 </div>
 
                 <div class="span-8 text-center">
-                    <h1 style="color:#000000;font-size:50px;margin-bottom:10px;color:#1356a7;">'VISION' Eye Hospital
-                    </h1>
-                    <p class="head-cap">(Day Care Unit)</p>
-                    <img src="{{ asset('pescription/images/logo-text.png') }}" style="margin-top:-30px;">
-                    <p>135, Bowbazar Road, (Moti Roy Bandh), Nabadwip</p>
-                    <p style="color:#000000;font-size:30px;margin-top:10px;"><strong>Donation For
-                            {{ $bookingInfo?->amount }}/-</strong></p>
+                    <h1 style="color:#000000;font-size:30px;line-height:30px;margin-bottom:3px;color:#1356a7;">'VISION'
+                        Eye Hospital</h1>
+                    <p class="head-cap" style="font-size:16px;">(Day Care Unit)</p>
+                    <img src="{{asset('pescription/images/logo-text.png')}}" style="margin-top:-8px;width:320px;">
+                    <p style="font-size:16px;">135, Bowbazar Road, (Moti Roy Bandh), Nabadwip</p>
+                    <p style="color:#000000;font-size:20px;margin-top:0px;"><strong>Donation For 40/-</strong></p>
                 </div>
 
                 <div class="span-2 text-right">
@@ -73,76 +58,65 @@
             </div>
             <div class="row" style="border:1px #000000 solid;border-radius:30px;padding:30px;color:#000000;">
                 <div class="span-12">
-                    <p class="three-line"><span>OPD/ORC No<strong
-                                class="line3"style="width:600px;">{{ $bookingInfo?->booking_id ?? ' ' }}</strong></span>
-                        <span>Venue<strong
-                                class="line3">{{ $bookingInfo?->pescription?->venue }}</strong></span><span>Date<strong
-                                class="line3"
-                                style="width:170px;">{{ \Carbon\Carbon::parse($bookingInfo?->created_at)->format('d M, Y h:i A') }}</strong></span>
-                    </p>
-                    <p class="single-line">Pationt's Name<strong class="full-line2">{{ $bookingInfo?->patient->name }}
-                        </strong></p>
-                    <p class="single-line">Father's/Husband Name<strong class="full-line2">
-                            {{ $bookingInfo?->pescription?->guardians_name ?? ' ' }}</strong></p>
-                    <p class="three-line"><span>Age<strong
-                                class="line3">{{ $bookingInfo?->pescription?->age ?? '' }}</strong></span>
+                    <p class="three-line"><span>OPD/ORC No<strong class="line3"style="width:200px;">{{ $bookingInfo?->booking_id ?? ' ' }}</strong></span>
+                        <span>Venue<strong class="line3"style="width:100px;">{{ $bookingInfo?->pescription?->venue }}</strong></span><span>Date<strong
+                                class="line3" style="width:100px;">{{ \Carbon\Carbon::parse($bookingInfo?->created_at)->format('d M, Y h:i A') }}</strong></span></p>
+                    <p class="single-line"><span>Pationt's Name</span><strong class="full-line2">{{ $bookingInfo?->patient->name }} </strong></p>
+                    <p class="single-line"><span>Father's/Husband Name</span><strong class="full-line2"> {{ $bookingInfo?->pescription?->guardians_name ?? ' ' }}</strong></p>
+                    <p class="three-line"><span>Age<strong class="line3"style="width:100px;">{{ $bookingInfo?->pescription?->age ?? '' }}</strong></span>
                         <span>Sex<strong
-                                class="line3">{{ $bookingInfo?->pescription?->sex ?? '' }}</strong></span><span>Doctor/Optometrist<strong
-                                class="line3"
-                                style="width:538px;">{{ $bookingInfo?->pescription?->doctor }}</strong></span>
-                    </p>
-                    <p class="two-line"><span>Address<strong class="line3"
-                                style="width:854px;">{{ $bookingInfo?->patient->address ?? ' ' }}</strong></span>
-                        <span>Mobile<strong class="line3">{{ $bookingInfo?->patient->phone_number }}</strong></span>
-                    </p>
+                                class="line3"style="width:100px;">{{ $bookingInfo?->pescription?->sex ?? '' }}</strong></span><span>Doctor/Optometrist<strong
+                                class="line3" style="width:200px;">{{ $bookingInfo?->pescription?->doctor }}</strong></span></p>
+                    <p class="two-line"><span>Address<strong class="line3" style="width:330px;">{{ $bookingInfo?->patient->address ?? ' ' }}</strong></span>
+                        <span>Mobile<strong class="line3"style="width:150px;">{{ $bookingInfo?->patient->phone_number }}</strong></span></p>
                 </div>
             </div>
             <div class="row" style="margin-top:30px;">
                 <div class="span-6" style="color:#000000;">
-                    <div style="border:1px #000000 solid;padding:15px;text-align:center;margin-bottom:20px;">
-                        <p>Clinical Findings</p>
+                    <div style="border:1px #000000 solid;padding:0;text-align:center;margin-bottom:0;">
+                        <p><b>Clinical Findings</b></p>
                     </div>
                     <div style="text-align:center;">
-                        @if (!empty($bookingInfo?->pescription?->clinical_findings))
-                            @foreach (json_decode($bookingInfo?->pescription?->clinical_findings) as $finding)
-                                <p>{{ $finding }}
-                                </p>
-                            @endforeach
-                        @endif
-                        {{-- <p>Mat Cat <span
+                        <p>Mat Cat <span
+                                style="width: 20px;height: 22px;border: 1px #000000 solid;display: inline-block;text-align: center;margin-left: 10px;">R</span>
+                        </p>
+                        <p>Mat Cat <span
                                 style="width: 20px;height: 22px;border: 1px #000000 solid;display: inline-block;text-align: center;margin-left: 1px;">L</span>
                         </p>
                         <p>Post + Operaiod<span
                                 style="width: 20px;height: 22px;border: 1px #000000 solid;border-radius:60px;display: inline-block;text-align: center;margin-left: 10px;">R</span><span
                                 style="width: 20px;height: 22px;border: 1px #000000 solid;border-radius:60px;display: inline-block;text-align: center;margin-left: 10px;">L</span>
-                        </p> --}}
+                        </p>
                     </div>
                 </div>
                 <div class="span-6" style="color:#000000;">
-                    <div style="border:1px #000000 solid;padding:15px;text-align:center;margin-bottom:20px;">
-                        <p>Advice</p>
+                    <div style="border:1px #000000 solid;padding:0;text-align:center;margin-bottom:0;">
+                        <p><b>Advice</b></p>
                     </div>
                     <div style="text-align:center;">
-                        <span>B/S(P.P/Fasting/R) -</span><br>
-                        <span>B/P -</span><br>
-                        <span>Tonometry -</span><br>
-                        <span>SAC Test -</span><br>
-                        <span>ECG -</span><br>
-                        @if (!empty($bookingInfo?->pescription?->advice))
-                            @foreach (json_decode($bookingInfo?->pescription?->advice) as $advice)
-                                <p>{{ $advice }}</p>
-                            @endforeach
-                        @endif
+                        <p>B/S(P.P/Fasting/R)</p>
+                        <p>B/P</p>
+                        <p>Tonometry</p>
+                        <p>SAC Text</p>
+                        <p>E.C.G</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
+
+
+
+
+
     <script>
         window.onload = function() {
             window.print();
         };
     </script>
+
+
 </body>
 
 </html>
