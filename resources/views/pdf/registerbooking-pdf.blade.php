@@ -297,7 +297,7 @@
             }
 
             .half-page {
-                height: 50vh;
+                /* height: 50vh; */
                 /* Half of the viewport height */
                 box-sizing: border-box;
                 padding: 10px;
