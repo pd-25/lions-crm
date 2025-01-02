@@ -282,7 +282,7 @@
     <style>
         @media print {
             @page {
-                height: 50vh;
+                height: 100vh;
                 margin: 0;
             }
 
