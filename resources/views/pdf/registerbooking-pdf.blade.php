@@ -293,7 +293,7 @@
 
             .container {
                 width: 100%;
-                page-break-after: always;
+                /* page-break-after: always; */
             }
 
             .half-page {
@@ -348,7 +348,7 @@
 
 <body >
     <section class="bg-yellow">
-        <div class="container border-red ">
+        <div class="container border-red half-page">
             <div class="row" style="border-bottom:1px #cc6d57 solid; margin-bottom:20px;">
                 <div class="span-2">
                     <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('pdf/images/logo.png'))) }}"
