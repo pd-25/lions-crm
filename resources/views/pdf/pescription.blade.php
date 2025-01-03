@@ -52,7 +52,7 @@
                 </div>
 
                 <div class="span-2 text-right">
-                    <p><span style="font-weight:600;color:black;">Phone : 9732830564</span></p>
+                    <p><span style="font-weight:600;color:black;">Phone : 8250593472</span></p>
                     <p><span style="font-weight:600;color:black;"> 9800517218</span></p>
                 </div>
             </div>
