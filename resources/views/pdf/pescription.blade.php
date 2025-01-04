@@ -48,7 +48,7 @@
                     <p class="head-cap" style="font-size:16px;">(Day Care Unit)</p>
                     <img src="{{asset('pescription/images/logo-text.png')}}" style="margin-top:-8px;width:320px;">
                     <p style="font-size:16px;">135, Bowbazar Road, (Moti Roy Bandh), Nabadwip</p>
-                    <p style="color:#000000;font-size:20px;margin-top:0px;"><strong>Donation For 40/-</strong></p>
+                    <p style="color:#000000;font-size:20px;margin-top:0px;"><strong>Donation For {{$bookingInfo?->amount}}/-</strong></p>
                 </div>
 
                 <div class="span-2 text-right">
