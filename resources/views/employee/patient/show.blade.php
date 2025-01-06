@@ -66,7 +66,7 @@
                         </thead>
                         <tbody>
                             
-                            @foreach ($patient->registerBooking as $allbooking)
+                            @foreach ($patient->registerBooking()->orderBy('id', 'DESC')->get() as $allbooking)
                                 <tr>
                                     <th scope="row">{{ '#'.$allbooking->booking_id }}</th>
                                     <td>{!! $allbooking->booking_type_or_operation !!}</td>

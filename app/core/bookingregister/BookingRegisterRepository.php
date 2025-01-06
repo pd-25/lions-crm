@@ -10,6 +10,7 @@ use App\Models\RegisterBooking;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use illuminate\Support\Str;
@@ -136,7 +137,13 @@ class BookingRegisterRepository implements BookingRegisterInterface
             return DB::transaction(function () use ($userData, $bookingData) {
                 $bookingData['user_id'] = $this->checkUserByExistingId($userData);
                 $bookingData['booking_id'] = $this->generateUniqueBookingId();
-
+                if (Auth::guard('admin')->check()) {
+                    $bookingData['done_by_user_or_admin'] = 'admin';
+                    $bookingData['receptionist_id'] = auth()->guard('admin')->id();
+                } elseif (Auth::check()) {
+                    $bookingData['done_by_user_or_admin'] = 'user';
+                    $bookingData['receptionist_id'] = auth()->id();
+                }
                 $createBooking = $this->bookingRegisterModel->create($bookingData);
 
                 if ($createBooking instanceof RegisterBooking) {

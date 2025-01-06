@@ -12,7 +12,7 @@ class RegisterBooking extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['booking_id', 'user_id', 'patient_name', 'phone_number', 'address', 'amount', 'about_patient_problem', 'booking_type_id', 'operation_scheme_id', 'initial_paid_amount'];
+    protected $fillable = ['booking_id', 'user_id', 'patient_name', 'phone_number', 'address', 'amount', 'about_patient_problem', 'booking_type_id', 'operation_scheme_id', 'initial_paid_amount', "done_by_user_or_admin", "receptionist_id"];
 
     protected static function boot()
     {
@@ -76,5 +76,23 @@ class RegisterBooking extends Model
     public function pescription()
     {
         return $this->hasOne(Pescription::class, "register_booking_id", "id");
+    }
+
+    public function receptionist(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'receptionist_id', 'id');
+    }
+
+    public function admin(): BelongsTo
+    {
+        return $this->belongsTo(Admin::class, 'receptionist_id', 'id');
+    }
+
+    public function checkAction(){
+        if($this->done_by_user_or_admin == 'admin'){
+            return $this->admin();
+        }else{
+            return $this->receptionist();
+        }
     }
 }

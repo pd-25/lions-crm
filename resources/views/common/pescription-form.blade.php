@@ -16,8 +16,8 @@
                     <div class="col-md-6">
                         <label for=""><b>Venue</b></label><span class="text-danger">*</span>
                         <input type="text" placeholder="Enter venue"
-                            value="{{ $registerBooking->pescription?->venue ?? 'Lions Club of Nabadwip' }}" name="venue"
-                            class="form-control" required>
+                            value="{{ $registerBooking->pescription?->venue ?? 'Lions Club of Nabadwip' }}"
+                            name="venue" class="form-control" required>
                     </div>
 
                     <div class="col-md-6">
@@ -60,9 +60,21 @@
 
                     <div class="col-md-6">
                         <label for=""><b>Doctor/Optometrist</b></label><span class="text-danger">*</span>
-                        <input type="text" placeholder="Enter Doctor/Optometrist"
+                        {{-- <input type="text" placeholder="Enter Doctor/Optometrist"
                             value="{{ $registerBooking->pescription?->doctor ?? '' }}" name="doctor"
-                            class="form-control" required>
+                            class="form-control" required> --}}
+                        <select name="doctor" class="form-control" required>
+                            <option {{$registerBooking->pescription?->doctor == 'N. K. SAHA' ? 'selected' : ''}} value="N. K. SAHA">N. K. SAHA</option>
+                            <option {{$registerBooking->pescription?->doctor == 'M. K. ROY' ? 'selected' : ''}} value="M. K. ROY">M. K. ROY</option>
+                            <option {{$registerBooking->pescription?->doctor == 'R. SARKAR' ? 'selected' : ''}} value="R. SARKAR">R. SARKAR</option>
+                            <option {{$registerBooking->pescription?->doctor == 'R. PRAKASH' ? 'selected' : ''}} value="R. PRAKASH">R. PRAKASH</option>
+                            <option {{$registerBooking->pescription?->doctor == 'P. K. DAS' ? 'selected' : ''}} value="P. K. DAS">P. K. DAS</option>
+                            
+                            
+                            
+                            
+                            
+                        </select>
                     </div>
 
                     {{-- <div class="col-md-6">
@@ -95,7 +107,7 @@
                                 @foreach (json_decode($registerBooking->pescription->clinical_findings) as $finding)
                                     <div class="clinical-finding-input d-flex align-items-center mt-2">
                                         <input type="text" placeholder="write here" name="clinical_findings[]"
-                                            class="form-control" value="{{ $finding }}" >
+                                            class="form-control" value="{{ $finding }}">
                                         <button type="button"
                                             class="btn btn-danger btn-sm ms-2 remove-button">Remove</button>
                                     </div>
@@ -103,7 +115,7 @@
                             @else
                                 <div class="clinical-finding-input d-flex align-items-center">
                                     <input type="text" placeholder="write here" name="clinical_findings[]"
-                                        class="form-control" >
+                                        class="form-control">
                                 </div>
                             @endif
                         </div>
@@ -119,13 +131,13 @@
                                 <span>Tonometry -</span><br>
                                 <span>SAC Test -</span><br>
                                 <span>ECG -</span><br>
-                                    </div>
+                            </div>
                             {{-- this below comwnted code is functioal or dynamic advie, just uncomment it work --}}
                             @if (!empty($registerBooking->pescription?->advice))
                                 @foreach (json_decode($registerBooking->pescription->advice) as $advice)
                                     <div class="advice-input d-flex align-items-center mt-2">
                                         <input type="text" placeholder="write here" name="advice[]"
-                                            class="form-control" value="{{ $advice }}" >
+                                            class="form-control" value="{{ $advice }}">
                                         <button type="button"
                                             class="btn btn-danger btn-sm ms-2 remove-button-advice">Remove</button>
                                     </div>
@@ -133,7 +145,7 @@
                             @else
                                 <div class="advice-input d-flex align-items-center">
                                     <input type="text" placeholder="write here" name="advice[]"
-                                        class="form-control" >
+                                        class="form-control">
                                 </div>
                             @endif
                         </div>
@@ -145,7 +157,9 @@
 
                 </div>
                 <div class="float-end m4">
-                    <a target="_blank" class="m-3" title="Print" href="{{route('get-pescription-print', $registerBooking->slug)}}" ><i class="ri-download-fill">Print</i></a>
+                    <a target="_blank" class="m-3" title="Print"
+                        href="{{ route('get-pescription-print', $registerBooking->slug) }}"><i
+                            class="ri-download-fill">Print</i></a>
                     <button type="submit" class="btn btn-md btn-success">Save</button>
                 </div>
             </form>

@@ -14,7 +14,7 @@
                         @endif
                         <form action="{{ route('employee.register-bookings.index') }}" method="get"> 
                             <div class="d-flex">
-                                <input type="text" class="form-control" placeholder="booking Id " name="search_text"
+                                <input type="text" class="form-control" placeholder="Search by booking Id, Phone, name" name="search_text"
                                     value="{{ @request()->search_text }}">
                                 <button class="btn btn-md btn-success m-2">Search</button>
                             </div>
@@ -26,10 +26,11 @@
                                 <tr>
                                     <th scope="col">Booking ID</th>
                                     <th scope="col">Booking Type</th>
-                                    <th scope="col">Patient Name</th>
+                                   
                                     <th scope="col">Phone Number</th>
                                     <th scope="col">Amount</th>
                                     <th scope="col">Date</th>
+                                    <th scope="col">Done By</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
@@ -37,15 +38,15 @@
 
                                 @foreach ($allbookings as $allbooking)
                                     <tr>
-                                        <th scope="row">{{ '#' . $allbooking->booking_id }}</th>
+                                        <th scope="row">{{ '#' . $allbooking->booking_id }} <br><a href="{{ route('employee.patients.show', $allbooking->patient->slug) }}">{{ $allbooking->patient->name }}</a></th>
                                         <td>{!! $allbooking->booking_type_or_operation !!}</td>
-                                        <td>{{ $allbooking->patient->name }}</td>
                                         <td>{{ $allbooking->patient->phone_number }}</td>
                                         <td><b>{{ $allbooking->amount }}</b>
                                             <br>Paid: <span class="text-success">{{$allbooking->bookingPaymrnts->sum("amount")}}</span><br>
                                             Due: <span class="text-danger">{{($allbooking->amount -$allbooking->bookingPaymrnts->sum("amount"))}}</span>
                                         </td>
                                         <td>{{ \Carbon\Carbon::parse($allbooking->created_at)->format('dM, Y h:i A') }}</td>
+                                        <td>{{ $allbooking?->checkAction?->name  ?? 'N/A' }}</td>
                                         <td>
                                             <a href="{{ route('employee.register-bookings.show', $allbooking->slug) }}"><i
                                                     class="ri-eye-fill"></i></a>
