@@ -17,7 +17,7 @@
             line-height: 18px;
             font-weight: 600;
             color: #cc6d57;
-            max-width: 100%;    
+            max-width: 100%;
         }
 
         h1 {
@@ -260,12 +260,14 @@
             font-weight: 800;
             margin-top: 10px;
         }
-        img{
+
+        img {
             max-width: 100%;
             height: auto;
         }
 
         @media print {
+
             /* Print-specific styles */
             @page {
                 margin: 0;
@@ -346,7 +348,7 @@
 
 </head>
 
-<body >
+<body>
     <section class="bg-yellow">
         <div class="container border-red half-page">
             <div class="row" style="border-bottom:1px #cc6d57 solid; margin-bottom:20px;">
@@ -378,8 +380,26 @@
                     <p class="single-line">&nbsp;<strong class="full-line"></strong></p>
                 </div>
                 <div class="span-12">
-                    <p class="text-center"><span class="donbtn">Donation Rs. {{ $bookingInfo->amount }}/-</span></p>
+                    <table>
+                        <tr>
+                            <th>Amount</th>
+                            <th></th>
+                            <th>Date</th>
+                        </tr>
+                        @forelse ($bookingInfo?->bookingPaymrnts as $payment)
+                            <tr>
+                                <td>₹{{$payment->amount}}</td>
+                                <td></td>
+                                <td>{{ \Carbon\Carbon::parse($payment->created_at)->format('dM, Y') }}</td>
+                            </tr>
+                        @empty
+                        @endforelse
+
+                    </table>
+                    <p class="text-center"><span class="donbtn">{{trim(strtolower($bookingInfo?->bookingType->type_name)) == 'operation' ? $bookingInfo?->bookingType->type_name : 'Donation'}} Rs. {{ $bookingInfo?->bookingPaymrnts->sum('amount') }}/-</span></p>
+                    {{-- <p class="text-center"><span class="donbtn">Donation Rs. {{ $bookingInfo->amount }}/-</span></p> --}}
                     <p class="text-right">Signature</p>
+                    <p class="text-left">Date: {{date('Y-m-d')}}</p>
                 </div>
             </div>
         </div>
@@ -392,47 +412,6 @@
     </script>
 </body>
 
-{{-- <body  onload="window.print();">
 
-    <section class="bg-yellow">
-        <div class="container border-red">
-            <div class="row" style="border-bottom:1px #cc6d57 solid; margin-bottom:20px;">
-                <div class="span-2">
-                    <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('pdf/images/logo.png'))) }}">
-                </div>
-
-                <div class="span-8 text-center">
-                    <h1>VISION</h1>
-                    <p class="head-cap">(Eye Hospital-Day Care Unit)</p>
-                    <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('pdf/images/logo-text.png'))) }}" style="margin-top:-20px;">
-                    <p>135, Bowbazar Road, (Moti Roy Bandh), Nabadwip</p>
-                    <p style="margin-bottom:20px;"><span>STD- 03472</span><span style="padding-left:40px;">Phone: 240-931</span></p>
-                </div>
-
-                <div class="span-2 text-right">
-                    <p><span class="color-red">No.</span> <span class="notxt">{{ $bookingInfo->booking_id }}</span></p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="span-12">
-                    <p class="single-line">Name<strong class="full-line">{{ $bookingInfo?->patient?->name }}</strong></p>
-                    <p class="single-line">Address<strong class="full-line">{{ $bookingInfo?->patient?->address }}</strong></p>
-                    <p class="single-line">&nbsp;<strong class="full-line"></strong></p>
-                </div>
-                <div class="span-12">
-                    <p class="text-center"><span class="donbtn">Donation Rs. {{ $bookingInfo->amount }}/-</span></p>
-                    <p class="text-right">Signature</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <script>
-        window.onload = function() {
-            window.print();
-        };
-    </script>
-
-</body> --}}
 
 </html>

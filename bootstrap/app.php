@@ -1,5 +1,6 @@
 <?php
 
+use App\Console\Commands\BookingTypeWiseSaveIntoExpenditure;
 use App\Http\Middleware\Admin;
 use App\Http\Middleware\UserRoleCheck;
 use Illuminate\Foundation\Application;
@@ -18,6 +19,9 @@ return Application::configure(basePath: dirname(__DIR__))
             'receptionist' => UserRoleCheck::class
         ]);
     })
+    // ->withCommands([
+    //     BookingTypeWiseSaveIntoExpenditure::class,
+    // ])
     ->withExceptions(function (Exceptions $exceptions) {
         //
     })->create();
