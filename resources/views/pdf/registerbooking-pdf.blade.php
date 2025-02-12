@@ -396,7 +396,7 @@
                         @endforelse
 
                     </table>
-                    <p class="text-center"><span class="donbtn">{{trim(strtolower($bookingInfo?->bookingType->type_name)) == 'operation' ? $bookingInfo?->bookingType->type_name : 'Donation'}} Rs. {{ $bookingInfo?->bookingPaymrnts->sum('amount') }}/-</span></p>
+                    <p class="text-center"><span class="donbtn">{{trim(strtolower($bookingInfo?->bookingType->type_name)) == 'operation' ? 'Operation' : ucwords($bookingInfo?->bookingType->type_name)}} Rs. {{ $bookingInfo?->bookingPaymrnts->sum('amount') }}/-</span></p>
                     {{-- <p class="text-center"><span class="donbtn">Donation Rs. {{ $bookingInfo->amount }}/-</span></p> --}}
                     <p class="text-right">Signature</p>
                     <p class="text-left">Date: {{date('Y-m-d')}}</p>

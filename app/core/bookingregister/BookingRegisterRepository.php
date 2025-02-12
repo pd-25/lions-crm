@@ -184,14 +184,16 @@ class BookingRegisterRepository implements BookingRegisterInterface
 
     private function generateUniqueBookingId(): int
     {
-        $prefix = rand(100, 999);
-        $random_number = rand(100000, 999999);
-        $booking_id = $prefix . sprintf("%06d", $random_number);
-        $existing_booking = RegisterBooking::where('booking_id', $booking_id)->exists();
-        if ($existing_booking) {
-            return $this->generateUniqueBookingId();
-        }
-        return intval($booking_id);
+        // $prefix = rand(100, 999);
+        // $random_number = rand(100000, 999999);
+        // $booking_id = $prefix . sprintf("%06d", $random_number);
+        // $existing_booking = RegisterBooking::where('booking_id', $booking_id)->exists();
+        // if ($existing_booking) {
+        //     return $this->generateUniqueBookingId();
+        // }
+        // return intval($booking_id);
+        $lastBooking = RegisterBooking::latest('booking_id')->value('booking_id');
+        return 18191 + 1;
     }
 
     public function getBookingRegister($slug)
