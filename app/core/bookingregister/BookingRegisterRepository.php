@@ -193,7 +193,7 @@ class BookingRegisterRepository implements BookingRegisterInterface
         // }
         // return intval($booking_id);
         $lastBooking = RegisterBooking::latest('booking_id')->value('booking_id');
-        return 18190 + 1;
+        return $lastBooking + 1;
     }
 
     public function getBookingRegister($slug)
