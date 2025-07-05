@@ -69,6 +69,8 @@
                             <option {{$registerBooking->pescription?->doctor == 'R. SARKAR' ? 'selected' : ''}} value="R. SARKAR">R. SARKAR</option>
                             <option {{$registerBooking->pescription?->doctor == 'R. PRAKASH' ? 'selected' : ''}} value="R. PRAKASH">R. PRAKASH</option>
                             <option {{$registerBooking->pescription?->doctor == 'P. K. DAS' ? 'selected' : ''}} value="P. K. DAS">P. K. DAS</option>
+                            <option {{$registerBooking->pescription?->doctor == 'A. Raha' ? 'selected' : ''}} value="A. Raha">A. Raha</option>
+                            
                             
                             
                             
